@@ -174,7 +174,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcamp3/dev/1720782045080-2024-07-12T11:00:45.080Z/madcamp3.zip"
+                "S3Key": "serverless/madcamp3/dev/1720782338673-2024-07-12T11:05:38.673Z/madcamp3.zip"
               },
               "Handler": "src/handler.asdf",
               "Runtime": "nodejs20.x",
@@ -192,14 +192,14 @@
               "AsdfLogGroup"
             ]
           },
-          "AsdfLambdaVersionmaA4FXihKb1xpAlXRx1Jz3Q7TnEsoJ91QYnTgCI": {
+          "AsdfLambdaVersionHeFMAJ4bRz2ZukFr09Z2N4ZSB1q56xpXseqSK9NfI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AsdfLambdaFunction"
               },
-              "CodeSha256": "fltyMd1r2L7MTx7ihPQVa1dAQ/jXyJoP+BmXDUg7n44="
+              "CodeSha256": "QHGD7Xi7S/Av78r3ij2Y4QbWzKjwg6DrPiE+1OtKxCM="
             }
           },
           "ApiGatewayRestApi": {
@@ -275,7 +275,7 @@
               "AsdfLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1720782041742": {
+          "ApiGatewayDeployment1720782332705": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -337,7 +337,7 @@
           "AsdfLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AsdfLambdaVersionmaA4FXihKb1xpAlXRx1Jz3Q7TnEsoJ91QYnTgCI"
+              "Ref": "AsdfLambdaVersionHeFMAJ4bRz2ZukFr09Z2N4ZSB1q56xpXseqSK9NfI"
             },
             "Export": {
               "Name": "sls-madcamp3-dev-AsdfLambdaFunctionQualifiedArn"
@@ -485,7 +485,7 @@
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "AsdfLambdaVersionmaA4FXihKb1xpAlXRx1Jz3Q7TnEsoJ91QYnTgCI"
+        "versionLogicalId": "AsdfLambdaVersionHeFMAJ4bRz2ZukFr09Z2N4ZSB1q56xpXseqSK9NfI"
       }
     },
     "configValidationMode": "warn",
@@ -506,7 +506,7 @@
           "src/**/*.test.ts"
         ],
         "artifactsS3KeyDirname": "serverless/madcamp3/dev/code-artifacts",
-        "artifactDirectoryName": "serverless/madcamp3/dev/1720782045080-2024-07-12T11:00:45.080Z"
+        "artifactDirectoryName": "serverless/madcamp3/dev/1720782338673-2024-07-12T11:05:38.673Z"
       },
       "plugins": {
         "$ref": "$[\"service\"][\"plugins\"]"
@@ -519,7 +519,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/madcamp3/dev/1720782045080-2024-07-12T11:00:45.080Z",
+    "artifactDirectoryName": "serverless/madcamp3/dev/1720782338673-2024-07-12T11:05:38.673Z",
     "artifact": ""
   }
 }
