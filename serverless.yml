@@ -1,0 +1,29 @@
+service: madcamp3
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-northeast-2
+
+functions:
+  asdf:
+    handler: src/handler.asdf
+    events:
+      - http:
+          path: asdf
+          method: get
+
+package:
+  exclude:
+    - node_modules/**
+    - test/**
+    - src/**/*.spec.ts
+    - src/**/*.test.ts
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
