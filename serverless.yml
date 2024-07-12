@@ -13,6 +13,7 @@ functions:
           path: asdf
           method: get
 
+
 package:
   exclude:
     - node_modules/**
