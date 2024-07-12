@@ -162,7 +162,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/madcamp3/dev/1720782045080-2024-07-12T11:00:45.080Z/madcamp3.zip"
+          "S3Key": "serverless/madcamp3/dev/1720782924253-2024-07-12T11:15:24.253Z/madcamp3.zip"
         },
         "Handler": "src/handler.asdf",
         "Runtime": "nodejs20.x",
@@ -180,14 +180,14 @@
         "AsdfLogGroup"
       ]
     },
-    "AsdfLambdaVersionmaA4FXihKb1xpAlXRx1Jz3Q7TnEsoJ91QYnTgCI": {
+    "AsdfLambdaVersionWuFgieX7SOGUckaQwbmwg5ruCtYxp5fpI42qNIHqMQ8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AsdfLambdaFunction"
         },
-        "CodeSha256": "fltyMd1r2L7MTx7ihPQVa1dAQ/jXyJoP+BmXDUg7n44="
+        "CodeSha256": "8eSsmdzUj5axuqoiGmF6CYlPMImRQHLuV8ustxGV7rg="
       }
     },
     "ApiGatewayRestApi": {
@@ -263,7 +263,7 @@
         "AsdfLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1720782041742": {
+    "ApiGatewayDeployment1720782920849": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -325,7 +325,7 @@
     "AsdfLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AsdfLambdaVersionmaA4FXihKb1xpAlXRx1Jz3Q7TnEsoJ91QYnTgCI"
+        "Ref": "AsdfLambdaVersionWuFgieX7SOGUckaQwbmwg5ruCtYxp5fpI42qNIHqMQ8"
       },
       "Export": {
         "Name": "sls-madcamp3-dev-AsdfLambdaFunctionQualifiedArn"
