@@ -12,6 +12,15 @@ functions:
       - http:
           path: asdf
           method: get
+  connectHandler:
+    handler: src/handler.connectHandler
+    events:
+      - websocket: $connect
+
+  disconnectHandler:
+    handler: src/handler.disconnectHandler
+    events:
+      - websocket: $disconnect
 
   login:
     handler: src/login.kakao
@@ -20,6 +29,17 @@ functions:
           path: oauth
           method: get
 
+  offerHandler:
+    handler: src/handler.offerHandler
+    events:
+      - websocket:
+          route: offer
+
+  answerHandler:
+    handler: src/handler.answerHandler
+    events:
+      - websocket:
+          route: answer
 
 package:
   exclude:
