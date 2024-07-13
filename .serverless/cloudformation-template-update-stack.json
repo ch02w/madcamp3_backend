@@ -197,7 +197,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/madcamp3/dev/1720840896070-2024-07-13T03:21:36.070Z/madcamp3.zip"
+          "S3Key": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z/madcamp3.zip"
         },
         "Handler": "src/handler.asdf",
         "Runtime": "nodejs20.x",
@@ -222,7 +222,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/madcamp3/dev/1720840896070-2024-07-13T03:21:36.070Z/madcamp3.zip"
+          "S3Key": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z/madcamp3.zip"
         },
         "Handler": "src/handler.connectHandler",
         "Runtime": "nodejs20.x",
@@ -247,7 +247,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/madcamp3/dev/1720840896070-2024-07-13T03:21:36.070Z/madcamp3.zip"
+          "S3Key": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z/madcamp3.zip"
         },
         "Handler": "src/handler.disconnectHandler",
         "Runtime": "nodejs20.x",
@@ -272,7 +272,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/madcamp3/dev/1720840896070-2024-07-13T03:21:36.070Z/madcamp3.zip"
+          "S3Key": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z/madcamp3.zip"
         },
         "Handler": "src/handler.offerHandler",
         "Runtime": "nodejs20.x",
@@ -297,7 +297,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/madcamp3/dev/1720840896070-2024-07-13T03:21:36.070Z/madcamp3.zip"
+          "S3Key": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z/madcamp3.zip"
         },
         "Handler": "src/handler.answerHandler",
         "Runtime": "nodejs20.x",
@@ -438,7 +438,7 @@
         "AsdfLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1720840894321": {
+    "ApiGatewayDeployment1720844591676": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
