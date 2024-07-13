@@ -10,6 +10,8 @@
     "@types/aws-lambda": "^8.10.76",
     "@types/node": "^16.18.101",
     "serverless": "^3.30.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-ignore": "^0.2.1",
     "serverless-webpack": "^5.10.0",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",

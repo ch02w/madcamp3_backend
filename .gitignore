@@ -1,7 +1,5 @@
 node_modules
 .idea
-<<<<<<< HEAD
 .env
-=======
 aws
->>>>>>> master
+dist
