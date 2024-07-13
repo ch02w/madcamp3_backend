@@ -93,5 +93,4 @@ export const kakao: APIGatewayProxyHandler = async (event) => {
         if (connection) {
             await connection.end();
         }
-    }
-};
+    }};
