@@ -89,6 +89,12 @@
               "LogGroupName": "/aws/lambda/madcamp3-dev-asdf"
             }
           },
+<<<<<<< HEAD
+          "LoginLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/madcamp3-dev-login"
+=======
           "ConnectHandlerLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -111,6 +117,7 @@
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/madcamp3-dev-answerHandler"
+>>>>>>> master
             }
           },
           "IamRoleLambdaExecution": {
@@ -209,7 +216,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
+<<<<<<< HEAD
+                "S3Key": "serverless/madcamp3/dev/1720840560315-2024-07-13T03:16:00.315Z/madcamp3.zip"
+=======
                 "S3Key": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z/madcamp3.zip"
+>>>>>>> master
               },
               "Handler": "src/handler.asdf",
               "Runtime": "nodejs20.x",
@@ -227,18 +238,30 @@
               "AsdfLogGroup"
             ]
           },
+<<<<<<< HEAD
+          "LoginLambdaFunction": {
+=======
           "ConnectHandlerLambdaFunction": {
+>>>>>>> master
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
+<<<<<<< HEAD
+                "S3Key": "serverless/madcamp3/dev/1720840560315-2024-07-13T03:16:00.315Z/madcamp3.zip"
+              },
+              "Handler": "src/login.kakao",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "madcamp3-dev-login",
+=======
                 "S3Key": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z/madcamp3.zip"
               },
               "Handler": "src/handler.connectHandler",
               "Runtime": "nodejs20.x",
               "FunctionName": "madcamp3-dev-connectHandler",
+>>>>>>> master
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -249,6 +272,12 @@
               }
             },
             "DependsOn": [
+<<<<<<< HEAD
+              "LoginLogGroup"
+            ]
+          },
+          "AsdfLambdaVersionnITOEP5c6CzN6uELM8pBts5wTR76biAdJ31dGRkDRP0": {
+=======
               "ConnectHandlerLogGroup"
             ]
           },
@@ -328,20 +357,33 @@
             ]
           },
           "AsdfLambdaVersionG6bxThRkdsxi2g3dS3nPlOcnQtgRncoF061dC6H6As": {
+>>>>>>> master
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AsdfLambdaFunction"
               },
+<<<<<<< HEAD
+              "CodeSha256": "7LtDtnRnPOZm4l4ofOy+QWCbWUFHJ2M3rKna0sefnww="
+            }
+          },
+          "LoginLambdaVersionUDEALGVWiy5C4c7ygLj9J1BmDAAw1xGBAEDpAmNmxg": {
+=======
               "CodeSha256": "dGo/dgszuN3rXXx3tveFdyAR3yZsmMSO196MGEZh3I4="
             }
           },
           "ConnectHandlerLambdaVersionGyQ0tPzfN2QhhA5GCzzDnT76IB1na9sLQSq2v4EjAqU": {
+>>>>>>> master
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
+<<<<<<< HEAD
+                "Ref": "LoginLambdaFunction"
+              },
+              "CodeSha256": "7LtDtnRnPOZm4l4ofOy+QWCbWUFHJ2M3rKna0sefnww="
+=======
                 "Ref": "ConnectHandlerLambdaFunction"
               },
               "CodeSha256": "dGo/dgszuN3rXXx3tveFdyAR3yZsmMSO196MGEZh3I4="
@@ -375,6 +417,7 @@
                 "Ref": "AnswerHandlerLambdaFunction"
               },
               "CodeSha256": "dGo/dgszuN3rXXx3tveFdyAR3yZsmMSO196MGEZh3I4="
+>>>>>>> master
             }
           },
           "ApiGatewayRestApi": {
@@ -399,6 +442,21 @@
                 ]
               },
               "PathPart": "asdf",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceOauth": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "oauth",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -450,7 +508,57 @@
               "AsdfLambdaPermissionApiGateway"
             ]
           },
+<<<<<<< HEAD
+          "ApiGatewayMethodOauthGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceOauth"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "LoginLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "LoginLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayDeployment1720840554475": {
+=======
           "ApiGatewayDeployment1720844591676": {
+>>>>>>> master
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -459,7 +567,8 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodAsdfGet"
+              "ApiGatewayMethodAsdfGet",
+              "ApiGatewayMethodOauthGet"
             ]
           },
           "AsdfLambdaPermissionApiGateway": {
@@ -499,6 +608,20 @@
               }
             }
           },
+<<<<<<< HEAD
+          "LoginLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "LoginLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+=======
           "WebsocketsApi": {
             "Type": "AWS::ApiGatewayV2::Api",
             "Properties": {
@@ -516,6 +639,7 @@
               },
               "IntegrationType": "AWS_PROXY",
               "IntegrationUri": {
+>>>>>>> master
                 "Fn::Join": [
                   "",
                   [
@@ -523,6 +647,21 @@
                     {
                       "Ref": "AWS::Partition"
                     },
+<<<<<<< HEAD
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+=======
                     ":apigateway:",
                     {
                       "Ref": "AWS::Region"
@@ -535,10 +674,13 @@
                       ]
                     },
                     "/invocations"
+>>>>>>> master
                   ]
                 ]
               }
             }
+<<<<<<< HEAD
+=======
           },
           "DisconnectHandlerWebsocketsIntegration": {
             "Type": "AWS::ApiGatewayV2::Integration",
@@ -815,6 +957,7 @@
               },
               "Description": "Serverless Websockets"
             }
+>>>>>>> master
           }
         },
         "Outputs": {
@@ -829,12 +972,25 @@
           "AsdfLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
+<<<<<<< HEAD
+              "Ref": "AsdfLambdaVersionnITOEP5c6CzN6uELM8pBts5wTR76biAdJ31dGRkDRP0"
+=======
               "Ref": "AsdfLambdaVersionG6bxThRkdsxi2g3dS3nPlOcnQtgRncoF061dC6H6As"
+>>>>>>> master
             },
             "Export": {
               "Name": "sls-madcamp3-dev-AsdfLambdaFunctionQualifiedArn"
             }
           },
+<<<<<<< HEAD
+          "LoginLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "LoginLambdaVersionUDEALGVWiy5C4c7ygLj9J1BmDAAw1xGBAEDpAmNmxg"
+            },
+            "Export": {
+              "Name": "sls-madcamp3-dev-LoginLambdaFunctionQualifiedArn"
+=======
           "ConnectHandlerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
@@ -869,6 +1025,7 @@
             },
             "Export": {
               "Name": "sls-madcamp3-dev-AnswerHandlerLambdaFunctionQualifiedArn"
+>>>>>>> master
             }
           },
           "ServiceEndpoint": {
@@ -1039,6 +1196,24 @@
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
+<<<<<<< HEAD
+        "versionLogicalId": "AsdfLambdaVersionnITOEP5c6CzN6uELM8pBts5wTR76biAdJ31dGRkDRP0"
+      },
+      "login": {
+        "handler": "src/login.kakao",
+        "events": [
+          {
+            "http": {
+              "path": "oauth",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "madcamp3-dev-login",
+        "package": {
+          "artifact": ".serverless\\madcamp3.zip"
+=======
         "versionLogicalId": "AsdfLambdaVersionG6bxThRkdsxi2g3dS3nPlOcnQtgRncoF061dC6H6As"
       },
       "connectHandler": {
@@ -1051,11 +1226,15 @@
         "name": "madcamp3-dev-connectHandler",
         "package": {
           "artifact": ".serverless/madcamp3.zip"
+>>>>>>> master
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
+<<<<<<< HEAD
+        "versionLogicalId": "LoginLambdaVersionUDEALGVWiy5C4c7ygLj9J1BmDAAw1xGBAEDpAmNmxg"
+=======
         "versionLogicalId": "ConnectHandlerLambdaVersionGyQ0tPzfN2QhhA5GCzzDnT76IB1na9sLQSq2v4EjAqU"
       },
       "disconnectHandler": {
@@ -1112,6 +1291,7 @@
         "runtime": "nodejs20.x",
         "vpc": {},
         "versionLogicalId": "AnswerHandlerLambdaVersionbjMfJwxcDt0lZzR48XoX1moRuUQUP7GgXcbIwYEXM"
+>>>>>>> master
       }
     },
     "configValidationMode": "warn",
@@ -1132,7 +1312,11 @@
           "src/**/*.test.ts"
         ],
         "artifactsS3KeyDirname": "serverless/madcamp3/dev/code-artifacts",
+<<<<<<< HEAD
+        "artifactDirectoryName": "serverless/madcamp3/dev/1720840560315-2024-07-13T03:16:00.315Z"
+=======
         "artifactDirectoryName": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z"
+>>>>>>> master
       },
       "plugins": {
         "$ref": "$[\"service\"][\"plugins\"]"
@@ -1145,7 +1329,11 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
+<<<<<<< HEAD
+    "artifactDirectoryName": "serverless/madcamp3/dev/1720840560315-2024-07-13T03:16:00.315Z",
+=======
     "artifactDirectoryName": "serverless/madcamp3/dev/1720844593027-2024-07-13T04:23:13.027Z",
+>>>>>>> master
     "artifact": ""
   }
 }
