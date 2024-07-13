@@ -2,17 +2,36 @@ service: madcamp3
 
 provider:
   name: aws
-  runtime: nodejs20.x
+  runtime: nodejs14.x
   region: ap-northeast-2
 
 functions:
-  asdf:
-    handler: src/handler.asdf
+  connectHandler:
+    handler: src/handler.connectHandler
     events:
-      - http:
-          path: asdf
-          method: get
+      - websocket: $connect
 
+  disconnectHandler:
+    handler: src/handler.disconnectHandler
+    events:
+      - websocket: $disconnect
+
+  offerHandler:
+    handler: src/handler.offerHandler
+    events:
+      - websocket:
+          route: offer
+          authorizer: aws_iam
+
+  answerHandler:
+    handler: src/handler.answerHandler
+    events:
+      - websocket:
+          route: answer
+          authorizer: aws_iam
+
+plugins:
+  - serverless-webpack
 
 package:
   exclude:
@@ -20,9 +39,6 @@ package:
     - test/**
     - src/**/*.spec.ts
     - src/**/*.test.ts
-
-plugins:
-  - serverless-webpack
 
 custom:
   webpack:
