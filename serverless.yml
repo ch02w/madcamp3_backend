@@ -12,7 +12,7 @@ functions:
       - http:
           path: asdf
           method: get
-    connectHandler:
+  connectHandler:
     handler: src/handler.connectHandler
     events:
       - websocket: $connect
@@ -27,15 +27,12 @@ functions:
     events:
       - websocket:
           route: offer
-          authorizer: aws_iam
 
   answerHandler:
     handler: src/handler.answerHandler
     events:
       - websocket:
           route: answer
-          authorizer: aws_iam
-
 
 package:
   exclude:
