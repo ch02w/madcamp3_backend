@@ -1,49 +1,45 @@
-service: madcamp3
+service: madcamp31
+
+plugins:
+  - serverless-webpack
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
   runtime: nodejs20.x
   region: ap-northeast-2
+  environment:
+    DB_HOST: env:DB_HOST
+    DB_USER: env:DB_USER
+    DB_PASSWORD: env:DB_PASSWORD
+    DB_DATABASE: env:DB_DATABASE
+    KAKAO_API_KEY: env:KAKAO_API_KEY
+    KAKAO_REDIRECT_URI: env:KAKAO_REDIRECT_URI
+
+  vpc:
+    securityGroupIds:
+      - sg-0bd76336ac022c789
+    subnetIds:
+      - subnet-001a15c2ef77a9373
+      - subnet-02e6087dc234cade6
+      - subnet-022aff2afd3d4b04c
+      - subnet-0ba52e4d4989dc7cd
+      - subnet-0f1711463d45b9403
+      - subnet-0f4be7b9141369908
+  iam:
+      role: arn:aws:iam::730335448938:role/lambda-rds
+
+
 
 functions:
-  asdf:
-    handler: src/handler.asdf
-    events:
-      - http:
-          path: asdf
-          method: get
-  # connectHandler:
-  #   handler: src/handler.connectHandler
-  #   events:
-  #     - websocket: $connect
-  #     - http:
-  #         path: connectHandler
-  #         method: get
-  #         private: true
-
-  # disconnectHandler:
-  #   handler: src/handler.disconnectHandler
-  #   events:
-  #     - websocket: $disconnect
-
-  login:
-    handler: src/login.kakao
+  kakaoLogin:
+    handler: src/handler.kakao
+    timeout: 10
     events:
       - http:
           path: oauth
           method: get
 
-  # offerHandler:
-  #   handler: src/handler.offerHandler
-  #   events:
-  #     - websocket:
-  #         route: offer
-
-  # answerHandler:
-  #   handler: src/handler.answerHandler
-  #   events:
-  #     - websocket:
-  #         route: answer
 
 package:
   exclude:
@@ -52,8 +48,7 @@ package:
     - src/**/*.spec.ts
     - src/**/*.test.ts
 
-plugins:
-  - serverless-webpack
+
 
 custom:
   webpack:
