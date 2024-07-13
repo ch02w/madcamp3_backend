@@ -2,7 +2,7 @@
   "name": "madcamp3",
   "version": "1.0.0",
   "description": "",
-  "main": "src/handler.ts",
+  "main": "src/login.ts",
   "scripts": {
     "deploy": "serverless deploy"
   },
