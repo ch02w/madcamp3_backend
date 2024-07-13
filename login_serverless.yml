@@ -29,8 +29,6 @@ provider:
   iam:
       role: arn:aws:iam::730335448938:role/lambda-rds
 
-
-
 functions:
   kakaoLogin:
     handler: src/handler.kakao
