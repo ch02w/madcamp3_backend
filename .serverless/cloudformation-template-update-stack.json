@@ -77,6 +77,12 @@
         "LogGroupName": "/aws/lambda/madcamp3-dev-asdf"
       }
     },
+    "LoginLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/madcamp3-dev-login"
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -162,7 +168,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/madcamp3/dev/1720782924253-2024-07-12T11:15:24.253Z/madcamp3.zip"
+          "S3Key": "serverless/madcamp3/dev/1720840560315-2024-07-13T03:16:00.315Z/madcamp3.zip"
         },
         "Handler": "src/handler.asdf",
         "Runtime": "nodejs20.x",
@@ -180,14 +186,49 @@
         "AsdfLogGroup"
       ]
     },
-    "AsdfLambdaVersionWuFgieX7SOGUckaQwbmwg5ruCtYxp5fpI42qNIHqMQ8": {
+    "LoginLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/madcamp3/dev/1720840560315-2024-07-13T03:16:00.315Z/madcamp3.zip"
+        },
+        "Handler": "src/login.kakao",
+        "Runtime": "nodejs20.x",
+        "FunctionName": "madcamp3-dev-login",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "LoginLogGroup"
+      ]
+    },
+    "AsdfLambdaVersionnITOEP5c6CzN6uELM8pBts5wTR76biAdJ31dGRkDRP0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AsdfLambdaFunction"
         },
-        "CodeSha256": "8eSsmdzUj5axuqoiGmF6CYlPMImRQHLuV8ustxGV7rg="
+        "CodeSha256": "7LtDtnRnPOZm4l4ofOy+QWCbWUFHJ2M3rKna0sefnww="
+      }
+    },
+    "LoginLambdaVersionUDEALGVWiy5C4c7ygLj9J1BmDAAw1xGBAEDpAmNmxg": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "LoginLambdaFunction"
+        },
+        "CodeSha256": "7LtDtnRnPOZm4l4ofOy+QWCbWUFHJ2M3rKna0sefnww="
       }
     },
     "ApiGatewayRestApi": {
@@ -212,6 +253,21 @@
           ]
         },
         "PathPart": "asdf",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceOauth": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "oauth",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -263,7 +319,53 @@
         "AsdfLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1720782920849": {
+    "ApiGatewayMethodOauthGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceOauth"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "LoginLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "LoginLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayDeployment1720840554475": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -272,7 +374,8 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodAsdfGet"
+        "ApiGatewayMethodAsdfGet",
+        "ApiGatewayMethodOauthGet"
       ]
     },
     "AsdfLambdaPermissionApiGateway": {
@@ -281,6 +384,43 @@
         "FunctionName": {
           "Fn::GetAtt": [
             "AsdfLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "LoginLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "LoginLambdaFunction",
             "Arn"
           ]
         },
@@ -325,10 +465,19 @@
     "AsdfLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AsdfLambdaVersionWuFgieX7SOGUckaQwbmwg5ruCtYxp5fpI42qNIHqMQ8"
+        "Ref": "AsdfLambdaVersionnITOEP5c6CzN6uELM8pBts5wTR76biAdJ31dGRkDRP0"
       },
       "Export": {
         "Name": "sls-madcamp3-dev-AsdfLambdaFunctionQualifiedArn"
+      }
+    },
+    "LoginLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "LoginLambdaVersionUDEALGVWiy5C4c7ygLj9J1BmDAAw1xGBAEDpAmNmxg"
+      },
+      "Export": {
+        "Name": "sls-madcamp3-dev-LoginLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {

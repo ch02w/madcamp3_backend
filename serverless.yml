@@ -13,6 +13,13 @@ functions:
           path: asdf
           method: get
 
+  login:
+    handler: src/login.kakao
+    events:
+      - http:
+          path: oauth
+          method: get
+
 
 package:
   exclude:
