@@ -1,4 +1,4 @@
-service: madcamp31
+service: user-service
 
 plugins:
   - serverless-webpack
@@ -32,12 +32,12 @@ provider:
 
 
 functions:
-  kakaoLogin:
-    handler: src/login.kakao
+  getAllUsers:
+    handler: src/user.getAllUsers
     timeout: 10
     events:
       - http:
-          path: oauth
+          path: user
           method: get
 
 
