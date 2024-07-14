@@ -9,14 +9,13 @@ const dbConfig = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
+    database: process.env.DB_NAME
 };
 
 export const getAllUsers: APIGatewayProxyHandler = async (event) => {
     let connection: Connection | null = null;
 
     try {
-        console.log(dbConfig);
         connection = await mysql.createConnection(dbConfig);
         const sql = `
             SELECT * FROM users
@@ -46,7 +45,6 @@ export const getAllUsers: APIGatewayProxyHandler = async (event) => {
 export const getUserById: APIGatewayProxyHandler = async (event) => {
     let connection: Connection | null = null;
     try {
-        console.log(dbConfig);
         connection = await mysql.createConnection(dbConfig);
         const userId = event.pathParameters?.userId;
         if (!userId) {
@@ -91,7 +89,6 @@ export const getUserById: APIGatewayProxyHandler = async (event) => {
 export const changeUserInfo: APIGatewayProxyHandler = async (event) => {
     let connection: Connection | null = null;
     try {
-        console.log(dbConfig);
         connection = await mysql.createConnection(dbConfig);
         const userId = event.pathParameters?.userId;
         if (!userId) {
