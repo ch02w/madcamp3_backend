@@ -46,6 +46,7 @@ export const getAllUsers: APIGatewayProxyHandler = async (event) => {
 export const getUserById: APIGatewayProxyHandler = async (event) => {
     let connection: Connection | null = null;
     try {
+        console.log(dbConfig);
         connection = await mysql.createConnection(dbConfig);
         const userId = event.pathParameters?.userId;
         if (!userId) {
@@ -90,6 +91,7 @@ export const getUserById: APIGatewayProxyHandler = async (event) => {
 export const changeUserInfo: APIGatewayProxyHandler = async (event) => {
     let connection: Connection | null = null;
     try {
+        console.log(dbConfig);
         connection = await mysql.createConnection(dbConfig);
         const userId = event.pathParameters?.userId;
         if (!userId) {
