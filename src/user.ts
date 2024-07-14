@@ -16,6 +16,7 @@ export const getAllUsers: APIGatewayProxyHandler = async (event) => {
     let connection: Connection | null = null;
 
     try {
+        console.log(dbConfig);
         connection = await mysql.createConnection(dbConfig);
         const sql = `
             SELECT * FROM users
