@@ -16,7 +16,7 @@ provider:
     KAKAO_API_KEY: env:KAKAO_API_KEY
     KAKAO_REDIRECT_URI: env:KAKAO_REDIRECT_URI
 
-  vpc:
+  vpc: # kinda 서버
     securityGroupIds:
       - sg-0bd76336ac022c789
     subnetIds:
@@ -27,7 +27,9 @@ provider:
       - subnet-0f1711463d45b9403
       - subnet-0f4be7b9141369908
   iam:
-      role: arn:aws:iam::730335448938:role/lambda-rds
+    role: arn:aws:iam::730335448938:role/lambda-rds
+
+# -- 위쪽 건들 ㄴㄴ
 
 functions:
   kakaoLogin:
@@ -61,6 +63,91 @@ functions:
           path: user/{userId}
           method: put
 
+  getAllOpenRooms:
+    handler: src/room.getAllOpenRooms
+    events:
+      - http:
+          path: room/open
+          method: get
+
+  createRoom:
+    handler: src/room.createRoom
+    events:
+      - http:
+          path: room
+          method: post
+
+  deleteRoom:
+    handler: src/room.deleteRoom
+    events:
+      - http:
+          path: room/{roomId}
+          method: delete
+
+  closeRoom:
+    handler: src/room.closeRoom
+    events:
+      - http:
+          path: room/{roomId}
+          method: put
+
+  getReservedSongs:
+    handler: src/roomSong.getReservedSongs
+    events:
+      - http:
+          path: room/{roomId}/song
+          method: get
+
+  addSongToRoom:
+    handler: src/roomSong.addSongToRoom
+    events:
+      - http:
+          path: room/{roomId}/song
+          method: post
+
+  updateSongStatus:
+    handler: src/roomSong.updateSongStatus
+    events:
+      - http:
+          path: room/{roomId}/song/{songId}
+          method: put
+  cancelReservation:
+    handler: src/roomSong.cancelReservation
+    events:
+      - http:
+          path: room/{roomId}/song/{songId}
+          method: delete
+
+  getFollowers:
+    handler: src/friends.getFollowers
+    events:
+      - http:
+          path: /friends/{userid}/follower
+          method: get
+  getFollowings:
+    handler: src/friends.getFollowings
+    events:
+      - http:
+          path: /friends/{userid}/following
+          method: get
+  followUser:
+    handler: src/friends.followUser
+    events:
+      - http:
+          path: /friends/{userid}/following
+          method: post
+  unfollowUser:
+    handler: src/friends.unfollowUser
+    events:
+      - http:
+          path: /friends/{userid}/unfollow/{following_id}
+          method: delete
+  blockFollower:
+    handler: src/friends.blockFollower
+    events:
+      - http:
+          path: /friends/{userid}/block/{followerId}
+          method: delete
 
 package:
   exclude:
@@ -68,8 +155,6 @@ package:
     - test/**
     - src/**/*.spec.ts
     - src/**/*.test.ts
-
-
 
 custom:
   webpack:
