@@ -1,4 +1,4 @@
-service: user-service
+service: madcamp31
 
 plugins:
   - serverless-webpack
@@ -29,9 +29,14 @@ provider:
   iam:
       role: arn:aws:iam::730335448938:role/lambda-rds
 
-
-
 functions:
+  kakaoLogin:
+    handler: src/login.kakao
+    events:
+      - http:
+          path: oauth
+          method: get
+
   getAllUsers:
     handler: src/user.getAllUsers
     timeout: 10
@@ -39,6 +44,20 @@ functions:
       - http:
           path: user
           method: get
+
+  getUserById:
+    handler: src/user.getUserById
+    timeout: 10
+    events:
+      - http: user/{userId}
+        method: get
+
+  changeUserInfo:
+    handler: src/user.changeUserInfo
+    timeout: 10
+    events:
+      - http: user/{userId}
+        method: put
 
 
 package:

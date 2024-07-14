@@ -17,10 +17,10 @@ export const getAllUsers: APIGatewayProxyHandler = async (event) => {
 
     try {
         connection = await mysql.createConnection(dbConfig);
-        const statement = connection.format('' +
-            'SELECT * FROM users' +
-            'ORDERED BY score DESC');
-        const [rows] = await connection.query(statement);
+        const sql = `
+            SELECT * FROM users
+            ORDER BY total_score DESC`;
+        const [rows] = await connection.query(sql);
 
         return {
             statusCode: 200,
@@ -41,3 +41,113 @@ export const getAllUsers: APIGatewayProxyHandler = async (event) => {
         }
     }
 }
+
+export const getUserById: APIGatewayProxyHandler = async (event) => {
+    let connection: Connection | null = null;
+    try {
+        connection = await mysql.createConnection(dbConfig);
+        const id = event.pathParameters?.userId;
+        if (!id) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({
+                    message: 'Id is required',
+                }),
+            };
+        }
+        const sql = `
+            SELECT * FROM users
+            WHERE id = ?`;
+        const [rows]: [any[], any] = await connection.query(sql, [id]);
+        if (rows.length === 0) {
+            return {
+                statusCode: 404,
+                body: JSON.stringify({
+                    message: 'User not found',
+                }),
+            };
+        }
+        return {
+            statusCode: 200,
+            body: JSON.stringify(rows[0]),
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                message: 'Internal server error',
+            }),
+        }
+    } finally {
+        if (connection) {
+            await connection.end();
+        }
+    }
+}
+
+export const changeUserInfo: APIGatewayProxyHandler = async (event) => {
+    let connection: Connection | null = null;
+    try {
+        connection = await mysql.createConnection(dbConfig);
+        const id = event.pathParameters?.id;
+        if (!id) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({
+                    message: 'Id is required',
+                }),
+            };
+        }
+
+        const body = JSON.parse(event.body || '{}');
+
+        // 허용된 필드 목록
+        const allowedFields = ['user_gender', 'bio', 'total_score'];
+        const fieldsToUpdate: string[] = [];
+        const values: any[] = [];
+
+        allowedFields.forEach(field => {
+            if (body[field] !== undefined) {
+                fieldsToUpdate.push(`${field} = ?`);
+                values.push(body[field]);
+            }
+        });
+
+        if (fieldsToUpdate.length === 0) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({
+                    message: 'No valid fields to update',
+                }),
+            };
+        }
+
+        const sql = `
+          UPDATE users
+          SET ${fieldsToUpdate.join(', ')}
+          WHERE id = ?`;
+        values.push(id);
+
+        await connection.query(sql, values);
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
+                message: 'User updated successfully',
+            }),
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                message: 'Internal server error',
+            }),
+        };
+    } finally {
+        if (connection) {
+            await connection.end();
+        }
+    }
+};
