@@ -49,15 +49,17 @@ functions:
     handler: src/user.getUserById
     timeout: 10
     events:
-      - http: user/{userId}
-        method: get
+      - http:
+          path: user/{userId}
+          method: get
 
   changeUserInfo:
     handler: src/user.changeUserInfo
     timeout: 10
     events:
-      - http: user/{userId}
-        method: put
+      - http:
+          path: user/{userId}
+          method: put
 
 
 package:

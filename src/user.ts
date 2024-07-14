@@ -46,8 +46,8 @@ export const getUserById: APIGatewayProxyHandler = async (event) => {
     let connection: Connection | null = null;
     try {
         connection = await mysql.createConnection(dbConfig);
-        const id = event.pathParameters?.userId;
-        if (!id) {
+        const userId = event.pathParameters?.userId;
+        if (!userId) {
             return {
                 statusCode: 400,
                 body: JSON.stringify({
@@ -57,8 +57,8 @@ export const getUserById: APIGatewayProxyHandler = async (event) => {
         }
         const sql = `
             SELECT * FROM users
-            WHERE id = ?`;
-        const [rows]: [any[], any] = await connection.query(sql, [id]);
+            WHERE user_id = ?`;
+        const [rows]: [any[], any] = await connection.query(sql, [userId]);
         if (rows.length === 0) {
             return {
                 statusCode: 404,
@@ -90,8 +90,8 @@ export const changeUserInfo: APIGatewayProxyHandler = async (event) => {
     let connection: Connection | null = null;
     try {
         connection = await mysql.createConnection(dbConfig);
-        const id = event.pathParameters?.id;
-        if (!id) {
+        const userId = event.pathParameters?.userId;
+        if (!userId) {
             return {
                 statusCode: 400,
                 body: JSON.stringify({
@@ -126,8 +126,8 @@ export const changeUserInfo: APIGatewayProxyHandler = async (event) => {
         const sql = `
           UPDATE users
           SET ${fieldsToUpdate.join(', ')}
-          WHERE id = ?`;
-        values.push(id);
+          WHERE user_id = ?`;
+        values.push(userId);
 
         await connection.query(sql, values);
 
