@@ -72,7 +72,11 @@ export const kakao: APIGatewayProxyHandler = async (event) => {
             statusCode: 200,
             body: JSON.stringify({
                 message: 'Login successful',
-                user
+                user: {
+                    id: user.id,
+                    name: user.kakao_account.profile.nickname,
+                    image: user.kakao_account.profile.profile_image_url,
+                },
             }),
         };
     } catch (error) {

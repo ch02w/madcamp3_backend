@@ -34,6 +34,7 @@ provider:
 functions:
   kakaoLogin:
     handler: src/login.kakao
+    timeout: 10
     events:
       - http:
           path: oauth
