@@ -49,22 +49,22 @@ export const createRoom: APIGatewayProxyHandler = async (event) => {
     connection = await mysql.createConnection(dbConfig);
 
     const body = JSON.parse(event.body || "{}");
-    const { title, sub_title } = body;
+    const { title, subTitle, ownerId, category } = body;
 
-    if (!title) {
+    if (!title || !ownerId) {
       return {
         statusCode: 400,
         body: JSON.stringify({
-          message: "Title is required",
+          message: "Title and owner_id both required",
         }),
       };
     }
 
     const sql = `
-        INSERT INTO room (title, sub_title)
-        VALUES (?, ?)`;
+        INSERT INTO room (title, sub_title, owner_id, category)
+        VALUES (?, ?, ?, ?)`;
 
-    await connection.query(sql, [title, sub_title]);
+    await connection.query(sql, [title, subTitle, ownerId, category]);
 
     return {
       statusCode: 201,
@@ -187,6 +187,282 @@ export const closeRoom: APIGatewayProxyHandler = async (event) => {
     };
   } catch (error) {
     console.error(error);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal server error",
+      }),
+    };
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
+  }
+};
+
+export const enterRoom: APIGatewayProxyHandler = async (event) => {
+  let connection: mysql.Connection | null = null;
+
+  try {
+    connection = await mysql.createConnection(dbConfig);
+
+    const { roomId } = event.pathParameters || {};
+    const { userId } = JSON.parse(event.body || "{}");
+
+    if (!roomId || !userId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "Missing roomId or userId",
+        }),
+      };
+    }
+
+    // Check if the room exists
+    const checkRoomSql = `
+      SELECT * FROM room
+      WHERE room_id = ?`;
+    const [roomRows] = await connection.query(checkRoomSql, [roomId]);
+
+    if (!roomRows) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({
+          message: "Room not found",
+        }),
+      };
+    }
+
+    // Check if the user exists
+    const checkUserSql = `
+      SELECT * FROM users
+      WHERE user_id = ?`;
+    const [userRows] = await connection.query(checkUserSql, [userId]);
+
+    if (!userRows) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({
+          message: "User not found",
+        }),
+      };
+    }
+
+    // Insert user into room_user
+    const insertSql = `
+      INSERT INTO room_user (user_id, room_id)
+      VALUES (?, ?)`;
+    const [result] = (await connection.query(insertSql, [
+      userId,
+      roomId,
+    ])) as any;
+
+    if (result.affectedRows === 1) {
+      return {
+        statusCode: 201,
+        body: JSON.stringify({
+          message: "User entered the room successfully",
+        }),
+      };
+    } else {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          message: "Failed to enter room",
+        }),
+      };
+    }
+  } catch (error) {
+    console.error("Error entering room:", error);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal server error",
+      }),
+    };
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
+  }
+};
+
+export const getAllUsersInRoom: APIGatewayProxyHandler = async (event) => {
+  let connection: mysql.Connection | null = null;
+
+  try {
+    connection = await mysql.createConnection(dbConfig);
+
+    const { roomId } = event.pathParameters || {};
+
+    if (!roomId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "Missing roomId",
+        }),
+      };
+    }
+
+    const sql = `
+      SELECT u.* 
+      FROM users u
+      JOIN room_user ru ON u.user_id = ru.user_id
+      WHERE ru.room_id = ?
+      ORDER BY ru.roomUser_id ASC`; // roomUser_id 오름차순으로 정렬
+
+    const [rows] = await connection.query(sql, [roomId]);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(rows),
+    };
+  } catch (error) {
+    console.error("Error fetching users in room:", error);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Failed to fetch users in room",
+      }),
+    };
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
+  }
+};
+
+export const updateScore: APIGatewayProxyHandler = async (event) => {
+  let connection: mysql.Connection | null = null;
+
+  try {
+    connection = await mysql.createConnection(dbConfig);
+
+    const { roomId, userId } = event.pathParameters || {};
+    const { score } = JSON.parse(event.body || "{}");
+
+    if (!roomId || !userId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "Missing roomId or userId",
+        }),
+      };
+    }
+
+    // Check if the room exists and get its rank_mode
+    const checkRoomSql = `
+      SELECT rank_mode FROM room
+      WHERE room_id = ?`;
+    const [roomRows] = (await connection.query(checkRoomSql, [roomId])) as any;
+
+    if (!roomRows) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({
+          message: "Room not found",
+        }),
+      };
+    }
+
+    const rankMode = roomRows[0].rank_mode;
+
+    if (!score && rankMode) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "rankMode requires score",
+        }),
+      };
+    }
+
+    const newScore = rankMode ? score : 101;
+
+    // Update user score in room_user
+    const updateSql = `
+      UPDATE room_user
+      SET score = ?
+      WHERE room_id = ? AND user_id = ?`;
+    const [result] = (await connection.query(updateSql, [
+      newScore,
+      roomId,
+      userId,
+    ])) as any;
+
+    if (result.affectedRows === 1) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          message: "User score updated successfully",
+        }),
+      };
+    } else {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({
+          message: "Failed to update user score",
+        }),
+      };
+    }
+  } catch (error) {
+    console.error("Error updating user score in room:", error);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal server error",
+      }),
+    };
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
+  }
+};
+
+export const deleteUserInRoom: APIGatewayProxyHandler = async (event) => {
+  let connection: mysql.Connection | null = null;
+
+  try {
+    connection = await mysql.createConnection(dbConfig);
+
+    const { roomId, userId } = event.pathParameters || {};
+
+    if (!roomId || !userId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "Missing roomId or userId",
+        }),
+      };
+    }
+
+    const sql = `
+      DELETE FROM room_user
+      WHERE room_id = ? AND user_id = ? AND score = -1`;
+
+    const [result] = (await connection.query(sql, [roomId, userId])) as any;
+
+    if (result.affectedRows === 1) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          message: "User deleted successfully",
+        }),
+      };
+    } else {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({
+          message: "User not found or not eligible for deletion",
+        }),
+      };
+    }
+  } catch (error) {
+    console.error("Error deleting user from room:", error);
 
     return {
       statusCode: 500,

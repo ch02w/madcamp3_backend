@@ -14,7 +14,7 @@
         "DB_PASSWORD": "madcamp3",
         "DB_NAME": "madcamp3",
         "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-        "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+        "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
       },
       "vpc": {
         "securityGroupIds": [
@@ -155,28 +155,28 @@
               "LogGroupName": "/aws/lambda/madcampHttpApi-dev-closeRoom"
             }
           },
-          "GetReservedSongsLogGroup": {
+          "EnterRoomLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/madcampHttpApi-dev-getReservedSongs"
+              "LogGroupName": "/aws/lambda/madcampHttpApi-dev-enterRoom"
             }
           },
-          "AddSongToRoomLogGroup": {
+          "GetAllUsersInRoomLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/madcampHttpApi-dev-addSongToRoom"
+              "LogGroupName": "/aws/lambda/madcampHttpApi-dev-getAllUsersInRoom"
             }
           },
-          "UpdateSongStatusLogGroup": {
+          "UpdateScoreLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/madcampHttpApi-dev-updateSongStatus"
+              "LogGroupName": "/aws/lambda/madcampHttpApi-dev-updateScore"
             }
           },
-          "CancelReservationLogGroup": {
+          "DeleteUserInRoomLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/madcampHttpApi-dev-cancelReservation"
+              "LogGroupName": "/aws/lambda/madcampHttpApi-dev-deleteUserInRoom"
             }
           },
           "GetFollowersLogGroup": {
@@ -216,7 +216,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/login.kakao",
               "Runtime": "nodejs20.x",
@@ -230,7 +230,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -254,7 +254,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/user.getAllUsers",
               "Runtime": "nodejs20.x",
@@ -268,7 +268,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -292,7 +292,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/user.getUserById",
               "Runtime": "nodejs20.x",
@@ -306,7 +306,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -330,7 +330,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/user.changeUserInfo",
               "Runtime": "nodejs20.x",
@@ -344,7 +344,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -368,7 +368,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/room.getAllOpenRooms",
               "Runtime": "nodejs20.x",
@@ -382,7 +382,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -406,7 +406,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/room.createRoom",
               "Runtime": "nodejs20.x",
@@ -420,7 +420,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -444,7 +444,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/room.deleteRoom",
               "Runtime": "nodejs20.x",
@@ -458,7 +458,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -482,7 +482,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/room.closeRoom",
               "Runtime": "nodejs20.x",
@@ -496,7 +496,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -513,18 +513,18 @@
               "CloseRoomLogGroup"
             ]
           },
-          "GetReservedSongsLambdaFunction": {
+          "EnterRoomLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
-              "Handler": "src/roomSong.getReservedSongs",
+              "Handler": "src/room.enterRoom",
               "Runtime": "nodejs20.x",
-              "FunctionName": "madcampHttpApi-dev-getReservedSongs",
+              "FunctionName": "madcampHttpApi-dev-enterRoom",
               "MemorySize": 1024,
               "Timeout": 6,
               "Environment": {
@@ -534,7 +534,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -548,21 +548,21 @@
               }
             },
             "DependsOn": [
-              "GetReservedSongsLogGroup"
+              "EnterRoomLogGroup"
             ]
           },
-          "AddSongToRoomLambdaFunction": {
+          "GetAllUsersInRoomLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
-              "Handler": "src/roomSong.addSongToRoom",
+              "Handler": "src/room.getAllUsersInRoom",
               "Runtime": "nodejs20.x",
-              "FunctionName": "madcampHttpApi-dev-addSongToRoom",
+              "FunctionName": "madcampHttpApi-dev-getAllUsersInRoom",
               "MemorySize": 1024,
               "Timeout": 6,
               "Environment": {
@@ -572,7 +572,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -586,21 +586,21 @@
               }
             },
             "DependsOn": [
-              "AddSongToRoomLogGroup"
+              "GetAllUsersInRoomLogGroup"
             ]
           },
-          "UpdateSongStatusLambdaFunction": {
+          "UpdateScoreLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
-              "Handler": "src/roomSong.updateSongStatus",
+              "Handler": "src/room.updateScore",
               "Runtime": "nodejs20.x",
-              "FunctionName": "madcampHttpApi-dev-updateSongStatus",
+              "FunctionName": "madcampHttpApi-dev-updateScore",
               "MemorySize": 1024,
               "Timeout": 6,
               "Environment": {
@@ -610,7 +610,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -624,21 +624,21 @@
               }
             },
             "DependsOn": [
-              "UpdateSongStatusLogGroup"
+              "UpdateScoreLogGroup"
             ]
           },
-          "CancelReservationLambdaFunction": {
+          "DeleteUserInRoomLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
-              "Handler": "src/roomSong.cancelReservation",
+              "Handler": "src/room.deleteUserInRoom",
               "Runtime": "nodejs20.x",
-              "FunctionName": "madcampHttpApi-dev-cancelReservation",
+              "FunctionName": "madcampHttpApi-dev-deleteUserInRoom",
               "MemorySize": 1024,
               "Timeout": 6,
               "Environment": {
@@ -648,7 +648,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -662,7 +662,7 @@
               }
             },
             "DependsOn": [
-              "CancelReservationLogGroup"
+              "DeleteUserInRoomLogGroup"
             ]
           },
           "GetFollowersLambdaFunction": {
@@ -672,7 +672,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/friends.getFollowers",
               "Runtime": "nodejs20.x",
@@ -686,7 +686,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -710,7 +710,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/friends.getFollowings",
               "Runtime": "nodejs20.x",
@@ -724,7 +724,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -748,7 +748,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/friends.followUser",
               "Runtime": "nodejs20.x",
@@ -762,7 +762,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -786,7 +786,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/friends.unfollowUser",
               "Runtime": "nodejs20.x",
@@ -800,7 +800,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -824,7 +824,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z/madcampHttpApi.zip"
+                "S3Key": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z/madcampHttpApi.zip"
               },
               "Handler": "src/friends.blockFollower",
               "Runtime": "nodejs20.x",
@@ -838,7 +838,7 @@
                   "DB_PASSWORD": "madcamp3",
                   "DB_NAME": "madcamp3",
                   "KAKAO_API_KEY": "f6cd63eaf3ea52e89ff8978fd1f187d4",
-                  "KAKAO_REDIRECT_URI": "https://is4r2vru75.execute-api.ap-northeast-2.amazonaws.com/oauth"
+                  "KAKAO_REDIRECT_URI": "http://localhost:3000/kakao/callback"
                 }
               },
               "Role": "arn:aws:iam::730335448938:role/lambda-rds",
@@ -855,174 +855,174 @@
               "BlockFollowerLogGroup"
             ]
           },
-          "KakaoLoginLambdaVersionHcI6ffGO2P61DZkfLvnyUGM8SAshPIFC7pPuphyE": {
+          "KakaoLoginLambdaVersion8yEfmXZqxyvAMLKBSjkSiR97XnevCGbuR3DrW8aV4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "KakaoLoginLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "GetAllUsersLambdaVersionDbdLqus8ebqlHUAxwtCS6RnvVoH0WfRkMLwTiLk": {
+          "GetAllUsersLambdaVersion4dvCgRNiANMzVfl3buYSfVdEpNqGsqu76nbMWnpdKg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllUsersLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "GetUserByIdLambdaVersionLIJIDx25D7bwoqdmQduneoVZVDnx2T2dWNd4UrTlo": {
+          "GetUserByIdLambdaVersionIpofKrIEIOhprrinW0tPOzvMT4Wp6B5rWLO4m686Q": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetUserByIdLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "ChangeUserInfoLambdaVersionMkZ8iBlFdgDQP8VNigLI1yZdzTgmD3QeENQCfCcc1og": {
+          "ChangeUserInfoLambdaVersionpw7i9TdoqETJek2AABn1rwf2CTc1yqD9Yp0sXvilcHQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ChangeUserInfoLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "GetAllOpenRoomsLambdaVersionzwIkpWSOod4XcAA368vFyauP2aKFB8TzaSJ27rEukZY": {
+          "GetAllOpenRoomsLambdaVersionbyhaqVewohVwiqBO7xYHMdHuZZBRPHyFA3H7Gu6x28": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllOpenRoomsLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "CreateRoomLambdaVersion4raISiMymSJvIgfKmvPV3FaeTvxxto9AEJwIxcE": {
+          "CreateRoomLambdaVersionUVVOGN1JBJPo7ksr1TfcWRwFPHgtkTpTqYIEipMj1I": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateRoomLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "DeleteRoomLambdaVersion4E4z62yUNJZA8gbmv98GbH3CywWh7o7GivwnM53c": {
+          "DeleteRoomLambdaVersionKjNUwiGsbd5XTBOsm4YsZ15NT8C8HAXGWToNtCIfE80": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteRoomLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "CloseRoomLambdaVersion6DKPZmjeccmQZQc42DtzDgbuRgUe5yr7deMGJLLtM": {
+          "CloseRoomLambdaVersiony2u55uBiv4LpmROtnJYtujmBi7FT9qOWo3jqQYwbeqw": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CloseRoomLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "GetReservedSongsLambdaVersionjpUZyAbf9fwzkSjujoqwDbVWM8mqr4Zw21QhxdIoxI": {
+          "EnterRoomLambdaVersionO27n5QKZ5q2gATnRBNwny5YlBI4qCQfjMVC7l7Zts": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "GetReservedSongsLambdaFunction"
+                "Ref": "EnterRoomLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "AddSongToRoomLambdaVersionc9xQyfDjLSHuxkD8MUTwsBPD6aolEjUn3tZkhKP82s": {
+          "GetAllUsersInRoomLambdaVersionLs5jgDjLYz5rbMZZnFq858Rj4jgEIaLZvBJYfUw6Sx4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "AddSongToRoomLambdaFunction"
+                "Ref": "GetAllUsersInRoomLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "UpdateSongStatusLambdaVersionk9y6zadcupj6C97Vu43bSfDOYM4qPThW3IBBY7F3Q": {
+          "UpdateScoreLambdaVersionQU3JWY5lCMMWJ9HYQtbgz4rW1CxchgOjhdtUhPTCw": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "UpdateSongStatusLambdaFunction"
+                "Ref": "UpdateScoreLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "CancelReservationLambdaVersionky1E4uKyE7MyqchuRRWp3vwxxaKnLmdL0hvvyXSbQ": {
+          "DeleteUserInRoomLambdaVersionMml1hKaxU7eEtLG9kZCkP0192TujV3EjDKdunPhE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "CancelReservationLambdaFunction"
+                "Ref": "DeleteUserInRoomLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "GetFollowersLambdaVersionr2Uix2ywFBcwUkrpiwRablv4u4L8dkz0Bqsj27Ec": {
+          "GetFollowersLambdaVersionAVBV7dm785kghA9LeHI94uEEfHR9V1ZwXIkc4C6DJg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetFollowersLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "GetFollowingsLambdaVersionDFfXpkfcxd2EKXvOcIhP3jrFkICq8Wl1wQMjjFFqLm4": {
+          "GetFollowingsLambdaVersionfIK41piPp27wKsXCtpf8GG9drRxI9if5xYgX2R3WU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetFollowingsLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "FollowUserLambdaVersionAxbni2P1DwVp22zh9lMwl5zBGAuJDPQBQbYYqvKUU": {
+          "FollowUserLambdaVersionkZ2wfBqZzIRusy36QaVoyI4bQTRDkpRsLI0T6t1BQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "FollowUserLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "UnfollowUserLambdaVersionsEcqfnjU9HCy0PHgAbsKkWx5EcoaQrEURjj5YiBBtrA": {
+          "UnfollowUserLambdaVersionggSp3cGaxnApM4rVPLuKMMytJIyW2KuJtU2fW3SQ0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UnfollowUserLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
-          "BlockFollowerLambdaVersionBIZjJmRxLu3KS4zxgheAFkntgqqtZCD29RISbhzyE": {
+          "BlockFollowerLambdaVersionDHV68rvgO1rTrP8jkFmf0KRNZY7vlXIpfB7yF39a0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "BlockFollowerLambdaFunction"
               },
-              "CodeSha256": "6dTmS3o5iBbnjBD6C+v1s0Wn0jTGr/Z9SqNU9o6m8PQ="
+              "CodeSha256": "x9n3hV3jgbMM2fdmX1EyZSjHiAI0Dz//q35Sd/s84Rw="
             }
           },
           "HttpApi": {
@@ -1621,12 +1621,12 @@
             },
             "DependsOn": "HttpApiIntegrationCloseRoom"
           },
-          "GetReservedSongsLambdaPermissionHttpApi": {
+          "EnterRoomLambdaPermissionHttpApi": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "GetReservedSongsLambdaFunction",
+                  "EnterRoomLambdaFunction",
                   "Arn"
                 ]
               },
@@ -1658,7 +1658,7 @@
               }
             }
           },
-          "HttpApiIntegrationGetReservedSongs": {
+          "HttpApiIntegrationEnterRoom": {
             "Type": "AWS::ApiGatewayV2::Integration",
             "Properties": {
               "ApiId": {
@@ -1666,39 +1666,39 @@
               },
               "IntegrationType": "AWS_PROXY",
               "IntegrationUri": {
-                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetReservedSongsLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"EnterRoomLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
               },
               "PayloadFormatVersion": "2.0",
               "TimeoutInMillis": 30000
             }
           },
-          "HttpApiRouteGetRoomRoomidVarSong": {
+          "HttpApiRoutePostRoomRoomidVarUser": {
             "Type": "AWS::ApiGatewayV2::Route",
             "Properties": {
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "GET /room/{roomId}/song",
+              "RouteKey": "POST /room/{roomId}/user",
               "Target": {
                 "Fn::Join": [
                   "/",
                   [
                     "integrations",
                     {
-                      "Ref": "HttpApiIntegrationGetReservedSongs"
+                      "Ref": "HttpApiIntegrationEnterRoom"
                     }
                   ]
                 ]
               }
             },
-            "DependsOn": "HttpApiIntegrationGetReservedSongs"
+            "DependsOn": "HttpApiIntegrationEnterRoom"
           },
-          "AddSongToRoomLambdaPermissionHttpApi": {
+          "GetAllUsersInRoomLambdaPermissionHttpApi": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "AddSongToRoomLambdaFunction",
+                  "GetAllUsersInRoomLambdaFunction",
                   "Arn"
                 ]
               },
@@ -1730,7 +1730,7 @@
               }
             }
           },
-          "HttpApiIntegrationAddSongToRoom": {
+          "HttpApiIntegrationGetAllUsersInRoom": {
             "Type": "AWS::ApiGatewayV2::Integration",
             "Properties": {
               "ApiId": {
@@ -1738,39 +1738,39 @@
               },
               "IntegrationType": "AWS_PROXY",
               "IntegrationUri": {
-                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"AddSongToRoomLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetAllUsersInRoomLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
               },
               "PayloadFormatVersion": "2.0",
               "TimeoutInMillis": 30000
             }
           },
-          "HttpApiRoutePostRoomRoomidVarSong": {
+          "HttpApiRouteGetRoomRoomidVarUser": {
             "Type": "AWS::ApiGatewayV2::Route",
             "Properties": {
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "POST /room/{roomId}/song",
+              "RouteKey": "GET /room/{roomId}/user",
               "Target": {
                 "Fn::Join": [
                   "/",
                   [
                     "integrations",
                     {
-                      "Ref": "HttpApiIntegrationAddSongToRoom"
+                      "Ref": "HttpApiIntegrationGetAllUsersInRoom"
                     }
                   ]
                 ]
               }
             },
-            "DependsOn": "HttpApiIntegrationAddSongToRoom"
+            "DependsOn": "HttpApiIntegrationGetAllUsersInRoom"
           },
-          "UpdateSongStatusLambdaPermissionHttpApi": {
+          "UpdateScoreLambdaPermissionHttpApi": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "UpdateSongStatusLambdaFunction",
+                  "UpdateScoreLambdaFunction",
                   "Arn"
                 ]
               },
@@ -1802,7 +1802,7 @@
               }
             }
           },
-          "HttpApiIntegrationUpdateSongStatus": {
+          "HttpApiIntegrationUpdateScore": {
             "Type": "AWS::ApiGatewayV2::Integration",
             "Properties": {
               "ApiId": {
@@ -1810,39 +1810,39 @@
               },
               "IntegrationType": "AWS_PROXY",
               "IntegrationUri": {
-                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"UpdateSongStatusLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"UpdateScoreLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
               },
               "PayloadFormatVersion": "2.0",
               "TimeoutInMillis": 30000
             }
           },
-          "HttpApiRoutePutRoomRoomidVarSongSongidVar": {
+          "HttpApiRoutePutRoomRoomidVarUseridVar": {
             "Type": "AWS::ApiGatewayV2::Route",
             "Properties": {
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "PUT /room/{roomId}/song/{songId}",
+              "RouteKey": "PUT /room/{roomId}/{userId}",
               "Target": {
                 "Fn::Join": [
                   "/",
                   [
                     "integrations",
                     {
-                      "Ref": "HttpApiIntegrationUpdateSongStatus"
+                      "Ref": "HttpApiIntegrationUpdateScore"
                     }
                   ]
                 ]
               }
             },
-            "DependsOn": "HttpApiIntegrationUpdateSongStatus"
+            "DependsOn": "HttpApiIntegrationUpdateScore"
           },
-          "CancelReservationLambdaPermissionHttpApi": {
+          "DeleteUserInRoomLambdaPermissionHttpApi": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "CancelReservationLambdaFunction",
+                  "DeleteUserInRoomLambdaFunction",
                   "Arn"
                 ]
               },
@@ -1874,7 +1874,7 @@
               }
             }
           },
-          "HttpApiIntegrationCancelReservation": {
+          "HttpApiIntegrationDeleteUserInRoom": {
             "Type": "AWS::ApiGatewayV2::Integration",
             "Properties": {
               "ApiId": {
@@ -1882,32 +1882,32 @@
               },
               "IntegrationType": "AWS_PROXY",
               "IntegrationUri": {
-                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"CancelReservationLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"DeleteUserInRoomLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
               },
               "PayloadFormatVersion": "2.0",
               "TimeoutInMillis": 30000
             }
           },
-          "HttpApiRouteDeleteRoomRoomidVarSongSongidVar": {
+          "HttpApiRouteDeleteRoomRoomidVarUseridVar": {
             "Type": "AWS::ApiGatewayV2::Route",
             "Properties": {
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "DELETE /room/{roomId}/song/{songId}",
+              "RouteKey": "DELETE /room/{roomId}/{userId}",
               "Target": {
                 "Fn::Join": [
                   "/",
                   [
                     "integrations",
                     {
-                      "Ref": "HttpApiIntegrationCancelReservation"
+                      "Ref": "HttpApiIntegrationDeleteUserInRoom"
                     }
                   ]
                 ]
               }
             },
-            "DependsOn": "HttpApiIntegrationCancelReservation"
+            "DependsOn": "HttpApiIntegrationDeleteUserInRoom"
           },
           "GetFollowersLambdaPermissionHttpApi": {
             "Type": "AWS::Lambda::Permission",
@@ -1966,7 +1966,7 @@
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "GET /friends/{userid}/follower",
+              "RouteKey": "GET /friends/{userId}/follower",
               "Target": {
                 "Fn::Join": [
                   "/",
@@ -2038,7 +2038,7 @@
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "GET /friends/{userid}/following",
+              "RouteKey": "GET /friends/{userId}/following",
               "Target": {
                 "Fn::Join": [
                   "/",
@@ -2110,7 +2110,7 @@
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "POST /friends/{userid}/following",
+              "RouteKey": "POST /friends/{userId}/following",
               "Target": {
                 "Fn::Join": [
                   "/",
@@ -2182,7 +2182,7 @@
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "DELETE /friends/{userid}/unfollow/{following_id}",
+              "RouteKey": "DELETE /friends/{userId}/unfollow/{followingId}",
               "Target": {
                 "Fn::Join": [
                   "/",
@@ -2254,7 +2254,7 @@
               "ApiId": {
                 "Ref": "HttpApi"
               },
-              "RouteKey": "DELETE /friends/{userid}/block/{followerId}",
+              "RouteKey": "DELETE /friends/{userId}/block/{followerId}",
               "Target": {
                 "Fn::Join": [
                   "/",
@@ -2282,7 +2282,7 @@
           "KakaoLoginLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "KakaoLoginLambdaVersionHcI6ffGO2P61DZkfLvnyUGM8SAshPIFC7pPuphyE"
+              "Ref": "KakaoLoginLambdaVersion8yEfmXZqxyvAMLKBSjkSiR97XnevCGbuR3DrW8aV4"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-KakaoLoginLambdaFunctionQualifiedArn"
@@ -2291,7 +2291,7 @@
           "GetAllUsersLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllUsersLambdaVersionDbdLqus8ebqlHUAxwtCS6RnvVoH0WfRkMLwTiLk"
+              "Ref": "GetAllUsersLambdaVersion4dvCgRNiANMzVfl3buYSfVdEpNqGsqu76nbMWnpdKg"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-GetAllUsersLambdaFunctionQualifiedArn"
@@ -2300,7 +2300,7 @@
           "GetUserByIdLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetUserByIdLambdaVersionLIJIDx25D7bwoqdmQduneoVZVDnx2T2dWNd4UrTlo"
+              "Ref": "GetUserByIdLambdaVersionIpofKrIEIOhprrinW0tPOzvMT4Wp6B5rWLO4m686Q"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-GetUserByIdLambdaFunctionQualifiedArn"
@@ -2309,7 +2309,7 @@
           "ChangeUserInfoLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ChangeUserInfoLambdaVersionMkZ8iBlFdgDQP8VNigLI1yZdzTgmD3QeENQCfCcc1og"
+              "Ref": "ChangeUserInfoLambdaVersionpw7i9TdoqETJek2AABn1rwf2CTc1yqD9Yp0sXvilcHQ"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-ChangeUserInfoLambdaFunctionQualifiedArn"
@@ -2318,7 +2318,7 @@
           "GetAllOpenRoomsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllOpenRoomsLambdaVersionzwIkpWSOod4XcAA368vFyauP2aKFB8TzaSJ27rEukZY"
+              "Ref": "GetAllOpenRoomsLambdaVersionbyhaqVewohVwiqBO7xYHMdHuZZBRPHyFA3H7Gu6x28"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-GetAllOpenRoomsLambdaFunctionQualifiedArn"
@@ -2327,7 +2327,7 @@
           "CreateRoomLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateRoomLambdaVersion4raISiMymSJvIgfKmvPV3FaeTvxxto9AEJwIxcE"
+              "Ref": "CreateRoomLambdaVersionUVVOGN1JBJPo7ksr1TfcWRwFPHgtkTpTqYIEipMj1I"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-CreateRoomLambdaFunctionQualifiedArn"
@@ -2336,7 +2336,7 @@
           "DeleteRoomLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteRoomLambdaVersion4E4z62yUNJZA8gbmv98GbH3CywWh7o7GivwnM53c"
+              "Ref": "DeleteRoomLambdaVersionKjNUwiGsbd5XTBOsm4YsZ15NT8C8HAXGWToNtCIfE80"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-DeleteRoomLambdaFunctionQualifiedArn"
@@ -2345,52 +2345,52 @@
           "CloseRoomLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CloseRoomLambdaVersion6DKPZmjeccmQZQc42DtzDgbuRgUe5yr7deMGJLLtM"
+              "Ref": "CloseRoomLambdaVersiony2u55uBiv4LpmROtnJYtujmBi7FT9qOWo3jqQYwbeqw"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-CloseRoomLambdaFunctionQualifiedArn"
             }
           },
-          "GetReservedSongsLambdaFunctionQualifiedArn": {
+          "EnterRoomLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetReservedSongsLambdaVersionjpUZyAbf9fwzkSjujoqwDbVWM8mqr4Zw21QhxdIoxI"
+              "Ref": "EnterRoomLambdaVersionO27n5QKZ5q2gATnRBNwny5YlBI4qCQfjMVC7l7Zts"
             },
             "Export": {
-              "Name": "sls-madcampHttpApi-dev-GetReservedSongsLambdaFunctionQualifiedArn"
+              "Name": "sls-madcampHttpApi-dev-EnterRoomLambdaFunctionQualifiedArn"
             }
           },
-          "AddSongToRoomLambdaFunctionQualifiedArn": {
+          "GetAllUsersInRoomLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AddSongToRoomLambdaVersionc9xQyfDjLSHuxkD8MUTwsBPD6aolEjUn3tZkhKP82s"
+              "Ref": "GetAllUsersInRoomLambdaVersionLs5jgDjLYz5rbMZZnFq858Rj4jgEIaLZvBJYfUw6Sx4"
             },
             "Export": {
-              "Name": "sls-madcampHttpApi-dev-AddSongToRoomLambdaFunctionQualifiedArn"
+              "Name": "sls-madcampHttpApi-dev-GetAllUsersInRoomLambdaFunctionQualifiedArn"
             }
           },
-          "UpdateSongStatusLambdaFunctionQualifiedArn": {
+          "UpdateScoreLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateSongStatusLambdaVersionk9y6zadcupj6C97Vu43bSfDOYM4qPThW3IBBY7F3Q"
+              "Ref": "UpdateScoreLambdaVersionQU3JWY5lCMMWJ9HYQtbgz4rW1CxchgOjhdtUhPTCw"
             },
             "Export": {
-              "Name": "sls-madcampHttpApi-dev-UpdateSongStatusLambdaFunctionQualifiedArn"
+              "Name": "sls-madcampHttpApi-dev-UpdateScoreLambdaFunctionQualifiedArn"
             }
           },
-          "CancelReservationLambdaFunctionQualifiedArn": {
+          "DeleteUserInRoomLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CancelReservationLambdaVersionky1E4uKyE7MyqchuRRWp3vwxxaKnLmdL0hvvyXSbQ"
+              "Ref": "DeleteUserInRoomLambdaVersionMml1hKaxU7eEtLG9kZCkP0192TujV3EjDKdunPhE"
             },
             "Export": {
-              "Name": "sls-madcampHttpApi-dev-CancelReservationLambdaFunctionQualifiedArn"
+              "Name": "sls-madcampHttpApi-dev-DeleteUserInRoomLambdaFunctionQualifiedArn"
             }
           },
           "GetFollowersLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetFollowersLambdaVersionr2Uix2ywFBcwUkrpiwRablv4u4L8dkz0Bqsj27Ec"
+              "Ref": "GetFollowersLambdaVersionAVBV7dm785kghA9LeHI94uEEfHR9V1ZwXIkc4C6DJg"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-GetFollowersLambdaFunctionQualifiedArn"
@@ -2399,7 +2399,7 @@
           "GetFollowingsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetFollowingsLambdaVersionDFfXpkfcxd2EKXvOcIhP3jrFkICq8Wl1wQMjjFFqLm4"
+              "Ref": "GetFollowingsLambdaVersionfIK41piPp27wKsXCtpf8GG9drRxI9if5xYgX2R3WU"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-GetFollowingsLambdaFunctionQualifiedArn"
@@ -2408,7 +2408,7 @@
           "FollowUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "FollowUserLambdaVersionAxbni2P1DwVp22zh9lMwl5zBGAuJDPQBQbYYqvKUU"
+              "Ref": "FollowUserLambdaVersionkZ2wfBqZzIRusy36QaVoyI4bQTRDkpRsLI0T6t1BQ"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-FollowUserLambdaFunctionQualifiedArn"
@@ -2417,7 +2417,7 @@
           "UnfollowUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UnfollowUserLambdaVersionsEcqfnjU9HCy0PHgAbsKkWx5EcoaQrEURjj5YiBBtrA"
+              "Ref": "UnfollowUserLambdaVersionggSp3cGaxnApM4rVPLuKMMytJIyW2KuJtU2fW3SQ0"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-UnfollowUserLambdaFunctionQualifiedArn"
@@ -2426,7 +2426,7 @@
           "BlockFollowerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "BlockFollowerLambdaVersionBIZjJmRxLu3KS4zxgheAFkntgqqtZCD29RISbhzyE"
+              "Ref": "BlockFollowerLambdaVersionDHV68rvgO1rTrP8jkFmf0KRNZY7vlXIpfB7yF39a0"
             },
             "Export": {
               "Name": "sls-madcampHttpApi-dev-BlockFollowerLambdaFunctionQualifiedArn"
@@ -2578,12 +2578,12 @@
         ],
         "name": "madcampHttpApi-dev-kakaoLogin",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "KakaoLoginLambdaVersionHcI6ffGO2P61DZkfLvnyUGM8SAshPIFC7pPuphyE"
+        "versionLogicalId": "KakaoLoginLambdaVersion8yEfmXZqxyvAMLKBSjkSiR97XnevCGbuR3DrW8aV4"
       },
       "getAllUsers": {
         "handler": "src/user.getAllUsers",
@@ -2600,12 +2600,12 @@
         ],
         "name": "madcampHttpApi-dev-getAllUsers",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetAllUsersLambdaVersionDbdLqus8ebqlHUAxwtCS6RnvVoH0WfRkMLwTiLk"
+        "versionLogicalId": "GetAllUsersLambdaVersion4dvCgRNiANMzVfl3buYSfVdEpNqGsqu76nbMWnpdKg"
       },
       "getUserById": {
         "handler": "src/user.getUserById",
@@ -2622,12 +2622,12 @@
         ],
         "name": "madcampHttpApi-dev-getUserById",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetUserByIdLambdaVersionLIJIDx25D7bwoqdmQduneoVZVDnx2T2dWNd4UrTlo"
+        "versionLogicalId": "GetUserByIdLambdaVersionIpofKrIEIOhprrinW0tPOzvMT4Wp6B5rWLO4m686Q"
       },
       "changeUserInfo": {
         "handler": "src/user.changeUserInfo",
@@ -2644,12 +2644,12 @@
         ],
         "name": "madcampHttpApi-dev-changeUserInfo",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "ChangeUserInfoLambdaVersionMkZ8iBlFdgDQP8VNigLI1yZdzTgmD3QeENQCfCcc1og"
+        "versionLogicalId": "ChangeUserInfoLambdaVersionpw7i9TdoqETJek2AABn1rwf2CTc1yqD9Yp0sXvilcHQ"
       },
       "getAllOpenRooms": {
         "handler": "src/room.getAllOpenRooms",
@@ -2665,13 +2665,13 @@
         ],
         "name": "madcampHttpApi-dev-getAllOpenRooms",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetAllOpenRoomsLambdaVersionzwIkpWSOod4XcAA368vFyauP2aKFB8TzaSJ27rEukZY"
+        "versionLogicalId": "GetAllOpenRoomsLambdaVersionbyhaqVewohVwiqBO7xYHMdHuZZBRPHyFA3H7Gu6x28"
       },
       "createRoom": {
         "handler": "src/room.createRoom",
@@ -2687,13 +2687,13 @@
         ],
         "name": "madcampHttpApi-dev-createRoom",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateRoomLambdaVersion4raISiMymSJvIgfKmvPV3FaeTvxxto9AEJwIxcE"
+        "versionLogicalId": "CreateRoomLambdaVersionUVVOGN1JBJPo7ksr1TfcWRwFPHgtkTpTqYIEipMj1I"
       },
       "deleteRoom": {
         "handler": "src/room.deleteRoom",
@@ -2709,13 +2709,13 @@
         ],
         "name": "madcampHttpApi-dev-deleteRoom",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteRoomLambdaVersion4E4z62yUNJZA8gbmv98GbH3CywWh7o7GivwnM53c"
+        "versionLogicalId": "DeleteRoomLambdaVersionKjNUwiGsbd5XTBOsm4YsZ15NT8C8HAXGWToNtCIfE80"
       },
       "closeRoom": {
         "handler": "src/room.closeRoom",
@@ -2731,211 +2731,211 @@
         ],
         "name": "madcampHttpApi-dev-closeRoom",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CloseRoomLambdaVersion6DKPZmjeccmQZQc42DtzDgbuRgUe5yr7deMGJLLtM"
+        "versionLogicalId": "CloseRoomLambdaVersiony2u55uBiv4LpmROtnJYtujmBi7FT9qOWo3jqQYwbeqw"
       },
-      "getReservedSongs": {
-        "handler": "src/roomSong.getReservedSongs",
+      "enterRoom": {
+        "handler": "src/room.enterRoom",
         "events": [
           {
             "httpApi": {
-              "path": "/room/{roomId}/song",
-              "method": "get"
-            },
-            "resolvedMethod": "GET",
-            "resolvedPath": "/room/{roomId}/song"
-          }
-        ],
-        "name": "madcampHttpApi-dev-getReservedSongs",
-        "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
-        },
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs20.x",
-        "vpc": {},
-        "versionLogicalId": "GetReservedSongsLambdaVersionjpUZyAbf9fwzkSjujoqwDbVWM8mqr4Zw21QhxdIoxI"
-      },
-      "addSongToRoom": {
-        "handler": "src/roomSong.addSongToRoom",
-        "events": [
-          {
-            "httpApi": {
-              "path": "/room/{roomId}/song",
+              "path": "/room/{roomId}/user",
               "method": "post"
             },
             "resolvedMethod": "POST",
-            "resolvedPath": "/room/{roomId}/song"
+            "resolvedPath": "/room/{roomId}/user"
           }
         ],
-        "name": "madcampHttpApi-dev-addSongToRoom",
+        "name": "madcampHttpApi-dev-enterRoom",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "AddSongToRoomLambdaVersionc9xQyfDjLSHuxkD8MUTwsBPD6aolEjUn3tZkhKP82s"
+        "versionLogicalId": "EnterRoomLambdaVersionO27n5QKZ5q2gATnRBNwny5YlBI4qCQfjMVC7l7Zts"
       },
-      "updateSongStatus": {
-        "handler": "src/roomSong.updateSongStatus",
+      "getAllUsersInRoom": {
+        "handler": "src/room.getAllUsersInRoom",
         "events": [
           {
             "httpApi": {
-              "path": "/room/{roomId}/song/{songId}",
+              "path": "/room/{roomId}/user",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/room/{roomId}/user"
+          }
+        ],
+        "name": "madcampHttpApi-dev-getAllUsersInRoom",
+        "package": {
+          "artifact": ".serverless/madcampHttpApi.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetAllUsersInRoomLambdaVersionLs5jgDjLYz5rbMZZnFq858Rj4jgEIaLZvBJYfUw6Sx4"
+      },
+      "updateScore": {
+        "handler": "src/room.updateScore",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/room/{roomId}/{userId}",
               "method": "put"
             },
             "resolvedMethod": "PUT",
-            "resolvedPath": "/room/{roomId}/song/{songId}"
+            "resolvedPath": "/room/{roomId}/{userId}"
           }
         ],
-        "name": "madcampHttpApi-dev-updateSongStatus",
+        "name": "madcampHttpApi-dev-updateScore",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateSongStatusLambdaVersionk9y6zadcupj6C97Vu43bSfDOYM4qPThW3IBBY7F3Q"
+        "versionLogicalId": "UpdateScoreLambdaVersionQU3JWY5lCMMWJ9HYQtbgz4rW1CxchgOjhdtUhPTCw"
       },
-      "cancelReservation": {
-        "handler": "src/roomSong.cancelReservation",
+      "deleteUserInRoom": {
+        "handler": "src/room.deleteUserInRoom",
         "events": [
           {
             "httpApi": {
-              "path": "/room/{roomId}/song/{songId}",
+              "path": "/room/{roomId}/{userId}",
               "method": "delete"
             },
             "resolvedMethod": "DELETE",
-            "resolvedPath": "/room/{roomId}/song/{songId}"
+            "resolvedPath": "/room/{roomId}/{userId}"
           }
         ],
-        "name": "madcampHttpApi-dev-cancelReservation",
+        "name": "madcampHttpApi-dev-deleteUserInRoom",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CancelReservationLambdaVersionky1E4uKyE7MyqchuRRWp3vwxxaKnLmdL0hvvyXSbQ"
+        "versionLogicalId": "DeleteUserInRoomLambdaVersionMml1hKaxU7eEtLG9kZCkP0192TujV3EjDKdunPhE"
       },
       "getFollowers": {
         "handler": "src/friends.getFollowers",
         "events": [
           {
             "httpApi": {
-              "path": "/friends/{userid}/follower",
+              "path": "/friends/{userId}/follower",
               "method": "get"
             },
             "resolvedMethod": "GET",
-            "resolvedPath": "/friends/{userid}/follower"
+            "resolvedPath": "/friends/{userId}/follower"
           }
         ],
         "name": "madcampHttpApi-dev-getFollowers",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetFollowersLambdaVersionr2Uix2ywFBcwUkrpiwRablv4u4L8dkz0Bqsj27Ec"
+        "versionLogicalId": "GetFollowersLambdaVersionAVBV7dm785kghA9LeHI94uEEfHR9V1ZwXIkc4C6DJg"
       },
       "getFollowings": {
         "handler": "src/friends.getFollowings",
         "events": [
           {
             "httpApi": {
-              "path": "/friends/{userid}/following",
+              "path": "/friends/{userId}/following",
               "method": "get"
             },
             "resolvedMethod": "GET",
-            "resolvedPath": "/friends/{userid}/following"
+            "resolvedPath": "/friends/{userId}/following"
           }
         ],
         "name": "madcampHttpApi-dev-getFollowings",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetFollowingsLambdaVersionDFfXpkfcxd2EKXvOcIhP3jrFkICq8Wl1wQMjjFFqLm4"
+        "versionLogicalId": "GetFollowingsLambdaVersionfIK41piPp27wKsXCtpf8GG9drRxI9if5xYgX2R3WU"
       },
       "followUser": {
         "handler": "src/friends.followUser",
         "events": [
           {
             "httpApi": {
-              "path": "/friends/{userid}/following",
+              "path": "/friends/{userId}/following",
               "method": "post"
             },
             "resolvedMethod": "POST",
-            "resolvedPath": "/friends/{userid}/following"
+            "resolvedPath": "/friends/{userId}/following"
           }
         ],
         "name": "madcampHttpApi-dev-followUser",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "FollowUserLambdaVersionAxbni2P1DwVp22zh9lMwl5zBGAuJDPQBQbYYqvKUU"
+        "versionLogicalId": "FollowUserLambdaVersionkZ2wfBqZzIRusy36QaVoyI4bQTRDkpRsLI0T6t1BQ"
       },
       "unfollowUser": {
         "handler": "src/friends.unfollowUser",
         "events": [
           {
             "httpApi": {
-              "path": "/friends/{userid}/unfollow/{following_id}",
+              "path": "/friends/{userId}/unfollow/{followingId}",
               "method": "delete"
             },
             "resolvedMethod": "DELETE",
-            "resolvedPath": "/friends/{userid}/unfollow/{following_id}"
+            "resolvedPath": "/friends/{userId}/unfollow/{followingId}"
           }
         ],
         "name": "madcampHttpApi-dev-unfollowUser",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UnfollowUserLambdaVersionsEcqfnjU9HCy0PHgAbsKkWx5EcoaQrEURjj5YiBBtrA"
+        "versionLogicalId": "UnfollowUserLambdaVersionggSp3cGaxnApM4rVPLuKMMytJIyW2KuJtU2fW3SQ0"
       },
       "blockFollower": {
         "handler": "src/friends.blockFollower",
         "events": [
           {
             "httpApi": {
-              "path": "/friends/{userid}/block/{followerId}",
+              "path": "/friends/{userId}/block/{followerId}",
               "method": "delete"
             },
             "resolvedMethod": "DELETE",
-            "resolvedPath": "/friends/{userid}/block/{followerId}"
+            "resolvedPath": "/friends/{userId}/block/{followerId}"
           }
         ],
         "name": "madcampHttpApi-dev-blockFollower",
         "package": {
-          "artifact": ".serverless\\madcampHttpApi.zip"
+          "artifact": ".serverless/madcampHttpApi.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "BlockFollowerLambdaVersionBIZjJmRxLu3KS4zxgheAFkntgqqtZCD29RISbhzyE"
+        "versionLogicalId": "BlockFollowerLambdaVersionDHV68rvgO1rTrP8jkFmf0KRNZY7vlXIpfB7yF39a0"
       }
     },
     "configValidationMode": "warn",
@@ -2959,7 +2959,7 @@
           "src/**/*.test.ts"
         ],
         "artifactsS3KeyDirname": "serverless/madcampHttpApi/dev/code-artifacts",
-        "artifactDirectoryName": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z"
+        "artifactDirectoryName": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z"
       },
       "custom": {
         "$ref": "$[\"service\"][\"custom\"]"
@@ -2969,7 +2969,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/madcampHttpApi/dev/1721042355011-2024-07-15T11:19:15.011Z",
+    "artifactDirectoryName": "serverless/madcampHttpApi/dev/1721059783213-2024-07-15T16:09:43.213Z",
     "artifact": ""
   }
 }

@@ -17,13 +17,13 @@ export const getFollowers: APIGatewayProxyHandler = async (event) => {
   try {
     connection = await mysql.createConnection(dbConfig);
 
-    const { userid } = event.pathParameters || {};
+    const { userId } = event.pathParameters || {};
 
-    if (!userid) {
+    if (!userId) {
       return {
         statusCode: 400,
         body: JSON.stringify({
-          message: "Missing userid",
+          message: "Missing userId",
         }),
       };
     }
@@ -34,7 +34,7 @@ export const getFollowers: APIGatewayProxyHandler = async (event) => {
             JOIN friends f ON u.user_id = f.follower_id
             WHERE f.following_id = ?`;
 
-    const [rows] = await connection.query(sql, [userid]);
+    const [rows] = await connection.query(sql, [userId]);
 
     return {
       statusCode: 200,
@@ -62,13 +62,13 @@ export const getFollowings: APIGatewayProxyHandler = async (event) => {
   try {
     connection = await mysql.createConnection(dbConfig);
 
-    const { userid } = event.pathParameters || {};
+    const { userId } = event.pathParameters || {};
 
-    if (!userid) {
+    if (!userId) {
       return {
         statusCode: 400,
         body: JSON.stringify({
-          message: "Missing userid",
+          message: "Missing userId",
         }),
       };
     }
@@ -79,7 +79,7 @@ export const getFollowings: APIGatewayProxyHandler = async (event) => {
             JOIN friends f ON u.user_id = f.following_id
             WHERE f.follower_id = ?`;
 
-    const [rows] = await connection.query(sql, [userid]);
+    const [rows] = await connection.query(sql, [userId]);
 
     return {
       statusCode: 200,
@@ -107,10 +107,10 @@ export const followUser: APIGatewayProxyHandler = async (event) => {
   try {
     connection = await mysql.createConnection(dbConfig);
 
-    const { userid } = event.pathParameters || {};
-    const { following_id } = JSON.parse(event.body || "{}");
+    const { userId } = event.pathParameters || {};
+    const { followingId } = JSON.parse(event.body || "{}");
 
-    if (!userid || !following_id) {
+    if (!userId || !followingId) {
       return {
         statusCode: 400,
         body: JSON.stringify({
@@ -125,8 +125,8 @@ export const followUser: APIGatewayProxyHandler = async (event) => {
           WHERE user_id IN (?, ?)
         `;
     const [userRows] = await connection.query(checkUsersSql, [
-      userid,
-      following_id,
+      userId,
+      followingId,
     ]);
     if (!userRows) {
       return {
@@ -143,8 +143,8 @@ export const followUser: APIGatewayProxyHandler = async (event) => {
           WHERE follower_id = ? AND following_id = ?
         `;
     const [followRows] = await connection.query(checkFollowSql, [
-      userid,
-      following_id,
+      userId,
+      followingId,
     ]);
     // if (followRows) {
     //   return {
@@ -161,8 +161,8 @@ export const followUser: APIGatewayProxyHandler = async (event) => {
           VALUES (?, ?)
         `;
     const [result] = (await connection.query(insertSql, [
-      userid,
-      following_id,
+      userId,
+      followingId,
     ])) as any;
 
     if (result.affectedRows === 1) {
@@ -202,13 +202,13 @@ export const unfollowUser: APIGatewayProxyHandler = async (event) => {
   try {
     connection = await mysql.createConnection(dbConfig);
 
-    const { userid, following_id } = event.pathParameters || {};
+    const { userId, followingId } = event.pathParameters || {};
 
-    if (!userid || !following_id) {
+    if (!userId || !followingId) {
       return {
         statusCode: 400,
         body: JSON.stringify({
-          message: "Missing userid or following_id",
+          message: "Missing userId or followingId",
         }),
       };
     }
@@ -218,8 +218,8 @@ export const unfollowUser: APIGatewayProxyHandler = async (event) => {
         WHERE follower_id = ? AND following_id = ?`;
 
     const [result] = (await connection.query(sql, [
-      userid,
-      following_id,
+      userId,
+      followingId,
     ])) as any;
 
     if (result.affectedRows === 1) {
@@ -259,9 +259,9 @@ export const blockFollower: APIGatewayProxyHandler = async (event) => {
   try {
     connection = await mysql.createConnection(dbConfig);
 
-    const { userid, followerId } = event.pathParameters || {};
+    const { userId, followerId } = event.pathParameters || {};
 
-    if (!userid || !followerId) {
+    if (!userId || !followerId) {
       return {
         statusCode: 400,
         body: JSON.stringify({
@@ -274,7 +274,7 @@ export const blockFollower: APIGatewayProxyHandler = async (event) => {
           DELETE FROM friends
           WHERE following_id = ? AND follower_id = ?`;
 
-    const [result] = (await connection.query(sql, [userid, followerId])) as any;
+    const [result] = (await connection.query(sql, [userId, followerId])) as any;
 
     if (result.affectedRows === 1) {
       return {

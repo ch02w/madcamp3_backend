@@ -30,6 +30,13 @@ provider:
     role: arn:aws:iam::730335448938:role/lambda-rds
 
 functions:
+  kakaoLogin:
+    handler: src/login.kakao
+    timeout: 10
+    events:
+      - httpApi:
+          path: /oauth
+          method: get
   getAllUsers:
     handler: src/user.getAllUsers
     timeout: 10
@@ -82,67 +89,95 @@ functions:
           path: /room/{roomId}
           method: put
 
-  getReservedSongs:
-    handler: src/roomSong.getReservedSongs
+  enterRoom:
+    handler: src/room.enterRoom
     events:
       - httpApi:
-          path: /room/{roomId}/song
-          method: get
-
-  addSongToRoom:
-    handler: src/roomSong.addSongToRoom
-    events:
-      - httpApi:
-          path: /room/{roomId}/song
+          path: /room/{roomId}/user
           method: post
 
-  updateSongStatus:
-    handler: src/roomSong.updateSongStatus
+  getAllUsersInRoom:
+    handler: src/room.getAllUsersInRoom
     events:
       - httpApi:
-          path: /room/{roomId}/song/{songId}
+          path: /room/{roomId}/user
+          method: get
+
+  updateScore:
+    handler: src/room.updateScore
+    events:
+      - httpApi:
+          path: /room/{roomId}/{userId}
           method: put
 
-  cancelReservation:
-    handler: src/roomSong.cancelReservation
+  deleteUserInRoom:
+    handler: src/room.deleteUserInRoom
     events:
       - httpApi:
-          path: /room/{roomId}/song/{songId}
+          path: /room/{roomId}/{userId}
           method: delete
+
+  # getReservedSongs:
+  #   handler: src/roomSong.getReservedSongs
+  #   events:
+  #     - httpApi:
+  #         path: /room/{roomId}/song
+  #         method: get
+
+  # addSongToRoom:
+  #   handler: src/roomSong.addSongToRoom
+  #   events:
+  #     - httpApi:
+  #         path: /room/{roomId}/song
+  #         method: post
+
+  # updateSongStatus:
+  #   handler: src/roomSong.updateSongStatus
+  #   events:
+  #     - httpApi:
+  #         path: /room/{roomId}/song/{songId}
+  #         method: put
+
+  # cancelReservation:
+  #   handler: src/roomSong.cancelReservation
+  #   events:
+  #     - httpApi:
+  #         path: /room/{roomId}/song/{songId}
+  #         method: delete
 
   getFollowers:
     handler: src/friends.getFollowers
     events:
       - httpApi:
-          path: /friends/{userid}/follower
+          path: /friends/{userId}/follower
           method: get
 
   getFollowings:
     handler: src/friends.getFollowings
     events:
       - httpApi:
-          path: /friends/{userid}/following
+          path: /friends/{userId}/following
           method: get
 
   followUser:
     handler: src/friends.followUser
     events:
       - httpApi:
-          path: /friends/{userid}/following
+          path: /friends/{userId}/following
           method: post
 
   unfollowUser:
     handler: src/friends.unfollowUser
     events:
       - httpApi:
-          path: /friends/{userid}/unfollow/{following_id}
+          path: /friends/{userId}/unfollow/{followingId}
           method: delete
 
   blockFollower:
     handler: src/friends.blockFollower
     events:
       - httpApi:
-          path: /friends/{userid}/block/{followerId}
+          path: /friends/{userId}/block/{followerId}
           method: delete
 
 package:
