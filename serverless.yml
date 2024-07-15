@@ -1,4 +1,4 @@
-service: madcamp31
+service: madcampHttpApi
 
 plugins:
   - serverless-webpack
@@ -16,7 +16,7 @@ provider:
     KAKAO_API_KEY: env:KAKAO_API_KEY
     KAKAO_REDIRECT_URI: env:KAKAO_REDIRECT_URI
 
-  vpc: # kinda 서버
+  vpc:
     securityGroupIds:
       - sg-0bd76336ac022c789
     subnetIds:
@@ -29,146 +29,121 @@ provider:
   iam:
     role: arn:aws:iam::730335448938:role/lambda-rds
 
-# -- 위쪽 건들 ㄴㄴ
 functions:
-#  kakaoLogin:
-#    handler: src/login.kakao
-#    events:
-#      - http:
-#          path: oauth
-#          method: get
-#          cors: true
-
   getAllUsers:
     handler: src/user.getAllUsers
     timeout: 10
     events:
-      - http:
-          path: user
+      - httpApi:
+          path: /user
           method: get
-          cors: true
 
   getUserById:
     handler: src/user.getUserById
     timeout: 10
     events:
-      - http:
-          path: user/{userId}
+      - httpApi:
+          path: /user/{userId}
           method: get
-          cors: true
 
   changeUserInfo:
     handler: src/user.changeUserInfo
     timeout: 10
     events:
-      - http:
-          path: user/{userId}
+      - httpApi:
+          path: /user/{userId}
           method: put
-          cors: true
 
   getAllOpenRooms:
     handler: src/room.getAllOpenRooms
     events:
-      - http:
-          path: room/open
+      - httpApi:
+          path: /room/open
           method: get
-          cors: true
 
   createRoom:
     handler: src/room.createRoom
     events:
-      - http:
-          path: room
+      - httpApi:
+          path: /room
           method: post
-          cors: true
 
   deleteRoom:
     handler: src/room.deleteRoom
     events:
-      - http:
-          path: room/{roomId}
+      - httpApi:
+          path: /room/{roomId}
           method: delete
-          cors: true
 
   closeRoom:
     handler: src/room.closeRoom
     events:
-      - http:
-          path: room/{roomId}
+      - httpApi:
+          path: /room/{roomId}
           method: put
-          cors: true
 
   getReservedSongs:
     handler: src/roomSong.getReservedSongs
     events:
-      - http:
-          path: room/{roomId}/song
+      - httpApi:
+          path: /room/{roomId}/song
           method: get
-          cors: true
 
   addSongToRoom:
     handler: src/roomSong.addSongToRoom
     events:
-      - http:
-          path: room/{roomId}/song
+      - httpApi:
+          path: /room/{roomId}/song
           method: post
-          cors: true
 
   updateSongStatus:
     handler: src/roomSong.updateSongStatus
     events:
-      - http:
-          path: room/{roomId}/song/{songId}
+      - httpApi:
+          path: /room/{roomId}/song/{songId}
           method: put
-          cors: true
 
   cancelReservation:
     handler: src/roomSong.cancelReservation
     events:
-      - http:
-          path: room/{roomId}/song/{songId}
+      - httpApi:
+          path: /room/{roomId}/song/{songId}
           method: delete
-          cors: true
 
   getFollowers:
     handler: src/friends.getFollowers
     events:
-      - http:
+      - httpApi:
           path: /friends/{userid}/follower
           method: get
-          cors: true
 
   getFollowings:
     handler: src/friends.getFollowings
     events:
-      - http:
+      - httpApi:
           path: /friends/{userid}/following
           method: get
-          cors: true
 
   followUser:
     handler: src/friends.followUser
     events:
-      - http:
+      - httpApi:
           path: /friends/{userid}/following
           method: post
-          cors: true
 
   unfollowUser:
     handler: src/friends.unfollowUser
     events:
-      - http:
+      - httpApi:
           path: /friends/{userid}/unfollow/{following_id}
           method: delete
-          cors: true
 
   blockFollower:
     handler: src/friends.blockFollower
     events:
-      - http:
+      - httpApi:
           path: /friends/{userid}/block/{followerId}
           method: delete
-          cors: true
 
 package:
   exclude:
@@ -181,35 +156,3 @@ custom:
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
-  cors:
-    origins:
-      - '*'
-    headers:
-      - Content-Type
-      - X-Amz-Date
-      - Authorization
-      - X-Api-Key
-      - X-Amz-Security-Token
-      - X-Amz-User-Agent
-    allowCredentials: false
-
-resources:
-  Resources:
-    GatewayResponseDefault4XX:
-      Type: 'AWS::ApiGateway::GatewayResponse'
-      Properties:
-        ResponseParameters:
-          'gatewayresponse.header.Access-Control-Allow-Origin': "'*'"
-          'gatewayresponse.header.Access-Control-Allow-Headers': "'*'"
-        ResponseType: DEFAULT_4XX
-        RestApiId:
-          Ref: 'ApiGatewayRestApi'
-    GatewayResponseDefault5XX:
-      Type: 'AWS::ApiGateway::GatewayResponse'
-      Properties:
-        ResponseParameters:
-          'gatewayresponse.header.Access-Control-Allow-Origin': "'*'"
-          'gatewayresponse.header.Access-Control-Allow-Headers': "'*'"
-        ResponseType: DEFAULT_5XX
-        RestApiId:
-          Ref: 'ApiGatewayRestApi'
