@@ -30,14 +30,14 @@ provider:
     role: arn:aws:iam::730335448938:role/lambda-rds
 
 # -- 위쪽 건들 ㄴㄴ
-
 functions:
-  kakaoLogin:
-    handler: src/login.kakao
-    events:
-      - http:
-          path: oauth
-          method: get
+#  kakaoLogin:
+#    handler: src/login.kakao
+#    events:
+#      - http:
+#          path: oauth
+#          method: get
+#          cors: true
 
   getAllUsers:
     handler: src/user.getAllUsers
@@ -46,6 +46,7 @@ functions:
       - http:
           path: user
           method: get
+          cors: true
 
   getUserById:
     handler: src/user.getUserById
@@ -54,6 +55,7 @@ functions:
       - http:
           path: user/{userId}
           method: get
+          cors: true
 
   changeUserInfo:
     handler: src/user.changeUserInfo
@@ -62,6 +64,7 @@ functions:
       - http:
           path: user/{userId}
           method: put
+          cors: true
 
   getAllOpenRooms:
     handler: src/room.getAllOpenRooms
@@ -69,6 +72,7 @@ functions:
       - http:
           path: room/open
           method: get
+          cors: true
 
   createRoom:
     handler: src/room.createRoom
@@ -76,6 +80,7 @@ functions:
       - http:
           path: room
           method: post
+          cors: true
 
   deleteRoom:
     handler: src/room.deleteRoom
@@ -83,6 +88,7 @@ functions:
       - http:
           path: room/{roomId}
           method: delete
+          cors: true
 
   closeRoom:
     handler: src/room.closeRoom
@@ -90,6 +96,7 @@ functions:
       - http:
           path: room/{roomId}
           method: put
+          cors: true
 
   getReservedSongs:
     handler: src/roomSong.getReservedSongs
@@ -97,6 +104,7 @@ functions:
       - http:
           path: room/{roomId}/song
           method: get
+          cors: true
 
   addSongToRoom:
     handler: src/roomSong.addSongToRoom
@@ -104,6 +112,7 @@ functions:
       - http:
           path: room/{roomId}/song
           method: post
+          cors: true
 
   updateSongStatus:
     handler: src/roomSong.updateSongStatus
@@ -111,12 +120,15 @@ functions:
       - http:
           path: room/{roomId}/song/{songId}
           method: put
+          cors: true
+
   cancelReservation:
     handler: src/roomSong.cancelReservation
     events:
       - http:
           path: room/{roomId}/song/{songId}
           method: delete
+          cors: true
 
   getFollowers:
     handler: src/friends.getFollowers
@@ -124,30 +136,39 @@ functions:
       - http:
           path: /friends/{userid}/follower
           method: get
+          cors: true
+
   getFollowings:
     handler: src/friends.getFollowings
     events:
       - http:
           path: /friends/{userid}/following
           method: get
+          cors: true
+
   followUser:
     handler: src/friends.followUser
     events:
       - http:
           path: /friends/{userid}/following
           method: post
+          cors: true
+
   unfollowUser:
     handler: src/friends.unfollowUser
     events:
       - http:
           path: /friends/{userid}/unfollow/{following_id}
           method: delete
+          cors: true
+
   blockFollower:
     handler: src/friends.blockFollower
     events:
       - http:
           path: /friends/{userid}/block/{followerId}
           method: delete
+          cors: true
 
 package:
   exclude:
@@ -160,3 +181,26 @@ custom:
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseType: DEFAULT_4XX
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST'"
+        RestApiId:
+          Ref: ApiGatewayRestApi
+    GatewayResponseDefault5XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseType: DEFAULT_5XX
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST'"
+        RestApiId:
+          Ref: ApiGatewayRestApi
