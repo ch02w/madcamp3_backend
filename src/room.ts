@@ -49,7 +49,7 @@ export const createRoom: APIGatewayProxyHandler = async (event) => {
     connection = await mysql.createConnection(dbConfig);
 
     const body = JSON.parse(event.body || "{}");
-    const { title, subTitle, ownerId, category } = body;
+    const { title, subTitle, ownerId, rankMode, category } = body;
 
     if (!title || !ownerId) {
       return {
@@ -61,15 +61,18 @@ export const createRoom: APIGatewayProxyHandler = async (event) => {
     }
 
     const sql = `
-        INSERT INTO room (title, sub_title, owner_id, category)
-        VALUES (?, ?, ?, ?)`;
+        INSERT INTO room (title, sub_title, rank_mode, owner_id, category)
+        VALUES (?, ?, ?, ?, ?)`;
 
-    await connection.query(sql, [title, subTitle, ownerId, category]);
+    const [result]: any = await connection?.execute(sql, [title, subTitle, rankMode, ownerId, category]);
+
+    const roomId = result.insertId;
 
     return {
       statusCode: 201,
       body: JSON.stringify({
         message: "Room created successfully",
+        room_id: roomId,
       }),
     };
   } catch (error) {

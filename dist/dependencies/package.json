@@ -1,0 +1,11 @@
+{
+  "name": "madcampHttpApi",
+  "version": "1.0.0",
+  "description": "Packaged externals for madcampHttpApi",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.10.2"
+  }
+}
