@@ -181,26 +181,35 @@ custom:
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
+  cors:
+    origins:
+      - '*'
+    headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+    allowCredentials: false
 
 resources:
   Resources:
     GatewayResponseDefault4XX:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
-        ResponseType: DEFAULT_4XX
         ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
-          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST'"
+          'gatewayresponse.header.Access-Control-Allow-Origin': "'*'"
+          'gatewayresponse.header.Access-Control-Allow-Headers': "'*'"
+        ResponseType: DEFAULT_4XX
         RestApiId:
-          Ref: ApiGatewayRestApi
+          Ref: 'ApiGatewayRestApi'
     GatewayResponseDefault5XX:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
-        ResponseType: DEFAULT_5XX
         ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
-          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST'"
+          'gatewayresponse.header.Access-Control-Allow-Origin': "'*'"
+          'gatewayresponse.header.Access-Control-Allow-Headers': "'*'"
+        ResponseType: DEFAULT_5XX
         RestApiId:
-          Ref: ApiGatewayRestApi
+          Ref: 'ApiGatewayRestApi'
