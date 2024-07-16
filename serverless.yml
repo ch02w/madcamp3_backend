@@ -75,13 +75,6 @@ functions:
           path: /room
           method: post
 
-  getRoomById:
-    handler: src/room.getRoomById
-    events:
-      - httpApi:
-          path: /room/{roomId}
-          method: get
-
   deleteRoom:
     handler: src/room.deleteRoom
     events:
@@ -164,6 +157,13 @@ functions:
     events:
       - httpApi:
           path: /friends/{userId}/following
+          method: get
+
+  checkFollowing:
+    handler: src/friends.checkFollowing
+    events:
+      - httpApi:
+          path: /friends/{userId}/{targetUserId}
           method: get
 
   followUser:

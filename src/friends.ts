@@ -29,10 +29,10 @@ export const getFollowers: APIGatewayProxyHandler = async (event) => {
     }
 
     const sql = `
-            SELECT u.* 
-            FROM users u
-            JOIN friends f ON u.user_id = f.follower_id
-            WHERE f.following_id = ?`;
+      SELECT u.*
+      FROM users u
+             JOIN friends f ON u.user_id = f.follower_id
+      WHERE f.following_id = ?`;
 
     const [rows] = await connection.query(sql, [userId]);
 
@@ -74,10 +74,10 @@ export const getFollowings: APIGatewayProxyHandler = async (event) => {
     }
 
     const sql = `
-            SELECT u.*
-            FROM users u
-            JOIN friends f ON u.user_id = f.following_id
-            WHERE f.follower_id = ?`;
+      SELECT u.*
+      FROM users u
+             JOIN friends f ON u.user_id = f.following_id
+      WHERE f.follower_id = ?`;
 
     const [rows] = await connection.query(sql, [userId]);
 
@@ -92,6 +92,62 @@ export const getFollowings: APIGatewayProxyHandler = async (event) => {
       statusCode: 500,
       body: JSON.stringify({
         message: "Failed to fetch followings",
+      }),
+    };
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
+  }
+};
+
+export const checkFollowing: APIGatewayProxyHandler = async (event) => {
+  let connection: mysql.Connection | null = null;
+
+  try {
+    connection = await mysql.createConnection(dbConfig);
+
+    const { userId, targetUserId } = event.pathParameters || {};
+
+    if (!userId || !targetUserId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "Missing userId or targetUserId",
+        }),
+      };
+    }
+
+    // Check if userId is following targetUserId
+    const sql = `
+      SELECT * 
+      FROM friends 
+      WHERE follower_id = ? AND following_id = ?
+    `;
+
+    const [rows] = (await connection.query(sql, [userId, targetUserId])) as any;
+
+    if (rows.length > 0) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          following: true,
+        }),
+      };
+    } else {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          following: false,
+        }),
+      };
+    }
+  } catch (error) {
+    console.error("Error checking following:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal server error",
       }),
     };
   } finally {
@@ -121,9 +177,9 @@ export const followUser: APIGatewayProxyHandler = async (event) => {
 
     // Check if the follower_id and following_id exist in the users table
     const checkUsersSql = `
-          SELECT user_id FROM users
-          WHERE user_id IN (?, ?)
-        `;
+      SELECT user_id FROM users
+      WHERE user_id IN (?, ?)
+    `;
     const [userRows] = await connection.query(checkUsersSql, [
       userId,
       followingId,
@@ -139,9 +195,9 @@ export const followUser: APIGatewayProxyHandler = async (event) => {
 
     // Check if the follow relationship already exists
     const checkFollowSql = `
-          SELECT * FROM friends
-          WHERE follower_id = ? AND following_id = ?
-        `;
+      SELECT * FROM friends
+      WHERE follower_id = ? AND following_id = ?
+    `;
     const [followRows] = await connection.query(checkFollowSql, [
       userId,
       followingId,
@@ -157,9 +213,9 @@ export const followUser: APIGatewayProxyHandler = async (event) => {
 
     // Insert new follow relationship
     const insertSql = `
-          INSERT INTO friends (follower_id, following_id)
-          VALUES (?, ?)
-        `;
+      INSERT INTO friends (follower_id, following_id)
+      VALUES (?, ?)
+    `;
     const [result] = (await connection.query(insertSql, [
       userId,
       followingId,
@@ -214,8 +270,8 @@ export const unfollowUser: APIGatewayProxyHandler = async (event) => {
     }
 
     const sql = `
-        DELETE FROM friends
-        WHERE follower_id = ? AND following_id = ?`;
+      DELETE FROM friends
+      WHERE follower_id = ? AND following_id = ?`;
 
     const [result] = (await connection.query(sql, [
       userId,
@@ -271,8 +327,8 @@ export const blockFollower: APIGatewayProxyHandler = async (event) => {
     }
 
     const sql = `
-          DELETE FROM friends
-          WHERE following_id = ? AND follower_id = ?`;
+      DELETE FROM friends
+      WHERE following_id = ? AND follower_id = ?`;
 
     const [result] = (await connection.query(sql, [userId, followerId])) as any;
 
