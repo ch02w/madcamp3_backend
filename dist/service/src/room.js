@@ -319,7 +319,7 @@ const getAllUsersInRoom = async (event) => {
       SELECT u.* 
       FROM users u
       JOIN room_user ru ON u.user_id = ru.user_id
-      WHERE ru.room_id = ?
+      WHERE ru.room_id = ? AND ru.online = true
       ORDER BY ru.roomUser_id ASC`; // roomUser_id 오름차순으로 정렬
         const [rows] = await connection.query(sql, [roomId]);
         return {
@@ -452,14 +452,6 @@ const deleteUserInRoom = async (event) => {
                     statusCode: 200,
                     body: JSON.stringify({
                         message: "User updated successfully",
-                    }),
-                };
-            }
-            else {
-                return {
-                    statusCode: 404,
-                    body: JSON.stringify({
-                        message: "User not found or not eligible for update",
                     }),
                 };
             }
