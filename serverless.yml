@@ -68,6 +68,13 @@ functions:
           path: /room/open
           method: get
 
+  getRoomById:
+    handler: src/room.getRoomById
+    events:
+      - httpApi:
+          path: /room/{roomId}
+          method: get
+
   createRoom:
     handler: src/room.createRoom
     events:
