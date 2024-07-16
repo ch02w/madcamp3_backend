@@ -75,6 +75,13 @@ functions:
           path: /room
           method: post
 
+  getRoomById:
+    handler: src/room.getRoomById
+    events:
+      - httpApi:
+          path: /room/{roomId}
+          method: get
+
   deleteRoom:
     handler: src/room.deleteRoom
     events:

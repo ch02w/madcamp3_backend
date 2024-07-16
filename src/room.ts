@@ -42,6 +42,57 @@ export const getAllOpenRooms: APIGatewayProxyHandler = async (event) => {
   }
 };
 
+export const getRoomById: APIGatewayProxyHandler = async (event) => {
+  let connection: Connection | null = null;
+
+  try {
+    connection = await mysql.createConnection(dbConfig);
+
+    const roomId = event.pathParameters?.roomId;
+    if (!roomId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "Room ID is required",
+        }),
+      };
+    }
+
+    const sql = `
+        SELECT * FROM room
+        WHERE room_id = ?`;
+    const [rows] = await connection.query(sql, [roomId]);
+
+    if (!rows) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({
+          message: "Room not found",
+        }),
+      };
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(rows),
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal server error",
+      }),
+    };
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
+  }
+
+}
+
 export const createRoom: APIGatewayProxyHandler = async (event) => {
   let connection: Connection | null = null;
 
