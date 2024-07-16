@@ -60,11 +60,14 @@ export const createRoom: APIGatewayProxyHandler = async (event) => {
       };
     }
 
-    const sql = `
-        INSERT INTO room (title, sub_title, owner_id, category)
-        VALUES (?, ?, ?, ?)`;
+    // Set default category if not provided
+    const roomCategory = category || "기타"; // Default category '기타' (or any other default you prefer)
 
-    await connection.query(sql, [title, subTitle, ownerId, category]);
+    const sql = `
+      INSERT INTO room (title, sub_title, owner_id, category, created_at)
+      VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`;
+
+    await connection.query(sql, [title, subTitle, ownerId, roomCategory]);
 
     return {
       statusCode: 201,
