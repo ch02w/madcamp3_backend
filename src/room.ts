@@ -438,6 +438,7 @@ export const getAllUsersInRoom: APIGatewayProxyHandler = async (event) => {
 };
 
 export const updateScore: APIGatewayProxyHandler = async (event) => {
+  console.log("event", event.body);
   let connection: mysql.Connection | null = null;
 
   try {
@@ -472,27 +473,45 @@ export const updateScore: APIGatewayProxyHandler = async (event) => {
 
     const rankMode = roomRows[0].rank_mode;
 
-    if (!score && rankMode) {
+    // Check if the room exists and get its rank_mode
+    const checkRoomUserSql = `
+      SELECT score, num_scored FROM room_user
+      WHERE room_id = ?, user_id = ?`;
+    const [roomUserRows] = (await connection.query(checkRoomSql, [roomId, userId])) as any;
+
+    if (!roomRows) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({
+          message: "Room not found",
+        }),
+      };
+    }
+    const numScored: number = roomUserRows[0].num_scored;
+    const originalScore: number = roomUserRows[0].score;
+
+    if (rankMode && (score === undefined || score === null || isNaN(score))) {
       return {
         statusCode: 400,
         body: JSON.stringify({
-          message: "rankMode requires score",
+          message: "rankMode requires a valid score",
         }),
       };
     }
 
-    const newScore = rankMode ? score : 101;
+    const newScore = rankMode ? (originalScore * numScored + score) / (numScored + 1) : 101;
 
-    // Update user score in room_user
+// Update user score in room_user
     const updateSql = `
       UPDATE room_user
-      SET score = ?
+      SET score = ?, num_scored = num_scored + 1
       WHERE room_id = ? AND user_id = ?`;
     const [result] = (await connection.query(updateSql, [
       newScore,
       roomId,
       userId,
     ])) as any;
+
 
     if (result.affectedRows === 1) {
       return {
