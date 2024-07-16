@@ -483,12 +483,34 @@ export const updateScore: APIGatewayProxyHandler = async (event) => {
       };
     }
 
-    const newScore = rankMode ? score : 101;
+    const checkRoomUserSql = `
+  SELECT score, num_scored FROM room_user
+  WHERE room_id = ? AND user_id = ?`;
+    const [roomUserRows] = (await connection.query(checkRoomUserSql, [
+      roomId,
+      userId,
+    ])) as any;
+
+    if (!roomRows) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({
+          message: "Room not found",
+        }),
+      };
+    }
+
+    const numScored: number = roomUserRows[0].num_scored;
+    const originalScore: number = roomUserRows[0].score;
+    // const newScore = rankMode ? score : 101;
+    const newScore = rankMode
+      ? (originalScore * numScored + score) / (numScored + 1)
+      : 101;
 
     // Update user score in room_user
     const updateSql = `
       UPDATE room_user
-      SET score = ?
+      SET score = ?, num_scored = num_scored + 1
       WHERE room_id = ? AND user_id = ?`;
     const [result] = (await connection.query(updateSql, [
       newScore,
