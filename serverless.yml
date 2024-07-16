@@ -117,6 +117,13 @@ functions:
           path: /room/{roomId}/{userId}
           method: delete
 
+  getRoomById:
+    handler: src/room.getRoomById
+    events:
+      - httpApi:
+          path: /room/{roomId}
+          method: get
+
   # getReservedSongs:
   #   handler: src/roomSong.getReservedSongs
   #   events:
