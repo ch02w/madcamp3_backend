@@ -124,6 +124,13 @@ functions:
           path: /room/{roomId}
           method: get
 
+  getUserScoreInRoom:
+    handler: src/room.getUserScoreInRoom
+    events:
+      - httpApi:
+          path: /room/{roomId}/{userId}/score
+          method: get
+
   # getReservedSongs:
   #   handler: src/roomSong.getReservedSongs
   #   events:
