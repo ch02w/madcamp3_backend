@@ -17,8 +17,39 @@ export const getAllUsers: APIGatewayProxyHandler = async (event) => {
   try {
     connection = await mysql.createConnection(dbConfig);
     const sql = `
-            SELECT * FROM users
-            ORDER BY total_score DESC`;
+      SELECT
+        u.user_id,
+        u.user_name,
+        u.user_image,
+        u.user_gender,
+        u.bio,
+        u.total_score,
+        COALESCE(f1.follower_count, 0) AS follower_count,
+        COALESCE(f2.following_count, 0) AS following_count
+      FROM
+        users u
+          LEFT JOIN
+        (SELECT
+           follower_id,
+           COUNT(*) AS follower_count
+         FROM
+           friends
+         GROUP BY
+           follower_id) f1
+        ON
+          u.user_id = f1.follower_id
+          LEFT JOIN
+        (SELECT
+           following_id,
+           COUNT(*) AS following_count
+         FROM
+           friends
+         GROUP BY
+           following_id) f2
+        ON
+          u.user_id = f2.following_id
+      ORDER BY u.total_score DESC;
+    `;
     const [rows] = await connection.query(sql);
 
     return {
