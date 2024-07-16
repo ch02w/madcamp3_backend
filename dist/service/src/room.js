@@ -436,6 +436,34 @@ const deleteUserInRoom = async (event) => {
                 }),
             };
         }
+        const checkSql = `
+      SELECT * FROM room_user
+      WHERE room_id = ? AND user_id = ? AND score = -1`;
+        const [checkRows] = await connection.query(checkSql, [roomId, userId]);
+        // Check if checkRows is an array and if its length is zero
+        if (Array.isArray(checkRows) && checkRows.length === 0) {
+            const updateSql = `
+        UPDATE room_user
+        SET online = false
+        WHERE room_id = ? AND user_id = ?`;
+            const [result] = (await connection.query(updateSql, [roomId, userId]));
+            if (result.affectedRows === 1) {
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify({
+                        message: "User updated successfully",
+                    }),
+                };
+            }
+            else {
+                return {
+                    statusCode: 404,
+                    body: JSON.stringify({
+                        message: "User not found or not eligible for update",
+                    }),
+                };
+            }
+        }
         const sql = `
       DELETE FROM room_user
       WHERE room_id = ? AND user_id = ? AND score = -1`;
