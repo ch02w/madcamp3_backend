@@ -42,7 +42,6 @@ export const getAllOpenRooms: APIGatewayProxyHandler = async (event) => {
   }
 };
 
-
 export const getUserScoreInRoom: APIGatewayProxyHandler = async (event) => {
   let connection: Connection | null = null;
   try {
@@ -87,8 +86,12 @@ export const getUserScoreInRoom: APIGatewayProxyHandler = async (event) => {
         message: "Internal server error",
       }),
     };
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
   }
-}
+};
 
 export const getRoomById: APIGatewayProxyHandler = async (event) => {
   let connection: Connection | null = null;
@@ -138,8 +141,7 @@ export const getRoomById: APIGatewayProxyHandler = async (event) => {
       await connection.end();
     }
   }
-
-}
+};
 
 export const createRoom: APIGatewayProxyHandler = async (event) => {
   let connection: Connection | null = null;
@@ -547,13 +549,16 @@ export const deleteUserInRoom: APIGatewayProxyHandler = async (event) => {
       WHERE room_id = ? AND user_id = ? AND score = -1`;
     const [checkRows] = await connection.query(checkSql, [roomId, userId]);
 
-// Check if checkRows is an array and if its length is zero
+    // Check if checkRows is an array and if its length is zero
     if (Array.isArray(checkRows) && checkRows.length === 0) {
       const updateSql = `
         UPDATE room_user
         SET online = false
         WHERE room_id = ? AND user_id = ?`;
-      const [result] = (await connection.query(updateSql, [roomId, userId])) as any;
+      const [result] = (await connection.query(updateSql, [
+        roomId,
+        userId,
+      ])) as any;
 
       if (result.affectedRows === 1) {
         return {
