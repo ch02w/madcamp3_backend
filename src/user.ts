@@ -54,11 +54,13 @@ export const getUserById: APIGatewayProxyHandler = async (event) => {
         }),
       };
     }
-    const sql = `
-            SELECT * FROM users
-            WHERE user_id = ?`;
-    const [rows]: [any[], any] = await connection.query(sql, [userId]);
-    if (rows.length === 0) {
+
+    // 사용자 정보 가져오기
+    const userSql = `
+      SELECT * FROM users
+      WHERE user_id = ?`;
+    const [userRows]: [any[], any] = await connection.query(userSql, [userId]);
+    if (userRows.length === 0) {
       return {
         statusCode: 404,
         body: JSON.stringify({
@@ -66,9 +68,44 @@ export const getUserById: APIGatewayProxyHandler = async (event) => {
         }),
       };
     }
+    const user = userRows[0];
+
+    // 팔로잉 목록 가져오기
+    const followingSql = `
+      SELECT u.user_id, u.user_name, u.user_image
+      FROM friends f
+      INNER JOIN users u ON f.following_id = u.user_id
+      WHERE f.follower_id = ?`;
+    const [followingRows]: [any[], any] = await connection.query(followingSql, [
+      userId,
+    ]);
+    user.following = followingRows;
+
+    // 팔로워 목록 가져오기
+    const followerSql = `
+      SELECT u.user_id, u.user_name, u.user_image
+      FROM friends f
+      INNER JOIN users u ON f.follower_id = u.user_id
+      WHERE f.following_id = ?`;
+    const [followerRows]: [any[], any] = await connection.query(followerSql, [
+      userId,
+    ]);
+    user.followers = followerRows;
+
+    // 역대 점수 가져오기
+    const scoreSql = `
+      SELECT ru.room_id, ru.score, r.created_at AS date, r.category
+      FROM room_user ru
+      INNER JOIN room r ON ru.room_id = r.room_id
+      WHERE ru.user_id = ?`;
+    const [scoreRows]: [any[], any] = await connection.query(scoreSql, [
+      userId,
+    ]);
+    user.scores = scoreRows;
+
     return {
       statusCode: 200,
-      body: JSON.stringify(rows[0]),
+      body: JSON.stringify(user),
     };
   } catch (error) {
     console.error(error);

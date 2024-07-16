@@ -49,7 +49,7 @@ export const createRoom: APIGatewayProxyHandler = async (event) => {
     connection = await mysql.createConnection(dbConfig);
 
     const body = JSON.parse(event.body || "{}");
-    const { title, subTitle, ownerId, rankMode, category } = body;
+    const { title, subTitle, ownerId, category } = body;
 
     if (!title || !ownerId) {
       return {
@@ -60,19 +60,19 @@ export const createRoom: APIGatewayProxyHandler = async (event) => {
       };
     }
 
+    // Set default category if not provided
+    const roomCategory = category || "기타"; // Default category '기타' (or any other default you prefer)
+
     const sql = `
-        INSERT INTO room (title, sub_title, rank_mode, owner_id, category)
-        VALUES (?, ?, ?, ?, ?)`;
+      INSERT INTO room (title, sub_title, owner_id, category, created_at)
+      VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`;
 
-    const [result]: any = await connection?.execute(sql, [title, subTitle, rankMode, ownerId, category]);
-
-    const roomId = result.insertId;
+    await connection.query(sql, [title, subTitle, ownerId, roomCategory]);
 
     return {
       statusCode: 201,
       body: JSON.stringify({
         message: "Room created successfully",
-        room_id: roomId,
       }),
     };
   } catch (error) {
