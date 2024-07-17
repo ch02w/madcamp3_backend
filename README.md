@@ -13,11 +13,13 @@
 
 ## 개발 기록
 
-![AWS Lambda](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/db606513-13ca-4938-908f-31a57f729700/Untitled.png)
+![aws](https://github.com/user-attachments/assets/0dd7009e-4a74-4234-ac8a-46f8f91b1754)
+
 
 AWS Lambda
 
-![Github Actions](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/edaf4e06-4615-483d-85f0-5fd9e0b211f7/Untitled.png)
+![github_action](https://github.com/user-attachments/assets/9e85ae05-36c1-4dea-b252-3dfc24605922)
+
 
 Github Actions
 
@@ -52,7 +54,8 @@ Github Actions를 사용하여 master 브랜치에 push가 되면 자동으로 �
 
 ### Database 구성
 
-![madcamp3_ERD.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/6403c1bf-7789-4acc-b7c1-46aed78c34ad/madcamp3_ERD.png)
+![db](https://github.com/user-attachments/assets/ca822637-c001-4c9a-a215-6f54414d43ce)
+
 
 ## 기능 설명
 
@@ -142,7 +145,8 @@ https://github.com/user-attachments/assets/f02ec7fa-b7ea-448d-98d6-d98c7d0c4976
 
 ### [실시간 통신 시연 영상]
 
-[madcamp3 video.mp4](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/5ea8c3fb-0b97-4200-8591-c84c0eae7f82/madcamp3_video.mp4)
+[live.mp4.zip](https://github.com/user-attachments/files/16265998/live.mp4.zip)
+
 
 - 실시간 통신 기능
 - Socket을 사용해 한 쪽에서 박수/미러볼 버튼을 누르면 다른 쪽에서도 보이게 된다.
